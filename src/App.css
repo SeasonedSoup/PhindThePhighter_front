@@ -1,0 +1,7 @@
+.square{
+  height: 150px;
+  width: 150px;
+  border: solid 2px black;
+  position: absolute;
+  transform: translate(-50%, -50%); 
+}
