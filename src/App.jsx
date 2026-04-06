@@ -1,7 +1,7 @@
 import skateboardMap from './assets/BogioSkateparkSquare.png';
 
 import { useEffect, useState } from 'react';
-import './App.css'
+import './styles/App.css'
 import watchClicks from './getcoordinate';
 
 
