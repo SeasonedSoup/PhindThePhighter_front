@@ -6,8 +6,8 @@ import App from './App.jsx'
 import {RouterProvider, createBrowserRouter } from 'react-router'
 
 import TitleScreen from './components/TitleScreen.jsx';
-import ChooseMap from './components/chooseMap.jsx';
-
+import ChooseMap from './components/chooseMap.jsx'
+import Gameplay from './components/Gameplay.jsx'
 const router = createBrowserRouter([
   {
     path: "/",
@@ -16,6 +16,10 @@ const router = createBrowserRouter([
   {
     path: "/maps",
     element: <ChooseMap/>
+  },
+  {
+    path: "/game/:mapName",
+    element: <Gameplay/>
   }
 ])
 
