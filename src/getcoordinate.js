@@ -7,9 +7,7 @@ const watchClicks = (cb, map) => {
         let x =  e.clientX - rect.left
         let y = e.clientY - rect.top
         
-         x = (x / rect.width) * 100;
-         y = (y / rect.height) * 100;
-        cb({x, y})
+        cb({ x, y });
     }
 
     map.addEventListener('click', handleClick);

@@ -19,8 +19,8 @@ export default function Gameplay() {
             setPos(coords)
             const square = document.querySelector('.square');
     
-            square.style.left = coords.x + '%';
-            square.style.top = coords.y + '%';
+            square.style.left = coords.x + 'px';
+            square.style.top = coords.y + 'px';
             square.style.display = "block";
         }, mapRef.current)
         return () => {
@@ -62,16 +62,36 @@ export default function Gameplay() {
             <div className='gameScreen'>
               <div className='map' ref={mapRef}>
                 <img src={testMap} alt="selected map" />
-                <div className='square'></div>
+                <div className='square' ></div>
               </div>
             </div>
 
             <div className='dropdownMenu'>
-              <h1>PHIND THESE CHARACTERS!</h1>
+              <h1>PHIND THESE PHIGHTERS!</h1>
               <div className='characters'>
-                <img src={coil} alt="coil" />
-                <img src={medkit} alt="medkit" />
-                <img src={sword} alt="sword" />
+                <div className='characterCard'>
+                  <img src={coil} alt="coil" />
+                  <div className='choices'>
+                     <img className="cancel" src={cancel} alt="cancel" />
+                    <img className="confirm" src={confirm} alt="confirm" />
+                  </div>
+                </div>
+                
+                 <div className='characterCard'>
+                  <img src={medkit} alt="medkit" />
+                  <div className='choices'>
+                     <img className="cancel" src={cancel} alt="cancel" />
+                    <img className="confirm" src={confirm} alt="confirm" />
+                  </div>
+                </div>
+
+                 <div className='characterCard'>
+                  <img src={sword} alt="sword" />
+                  <div className='choices'>
+                     <img className="cancel" src={cancel} alt="cancel" />
+                    <img className="confirm" src={confirm} alt="confirm" />
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -82,3 +102,5 @@ import coil from "@/assets/characters/coil.png"
 import medkit from "@/assets/characters/medkit.png"
 import sword from "@/assets/characters/sword.png"
 
+import cancel from "@/assets/icons/X.png"
+import confirm from "@/assets/icons/check-mark.png"
