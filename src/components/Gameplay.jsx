@@ -10,6 +10,7 @@ export default function Gameplay() {
     const [pos, setPos] = useState({x:0, y: 0})
     const [countdown, setCountdown] = useState(initialSeconds);
     const [timer, setTimer] = useState(0);
+    const [rect, setRect] = useState(null);
     const mapRef = useRef(null);
 
     //HANDLE CLICKS EFFECT
@@ -18,9 +19,10 @@ export default function Gameplay() {
          const stopWatching = watchClicks((coords) => {
             setPos(coords)
             const square = document.querySelector('.square');
-    
-            square.style.left = coords.x + 'px';
-            square.style.top = coords.y + 'px';
+            const size = mapRef.current.getBoundingClientRect();
+            setRect(size)
+            square.style.left = (coords.x * size.width) + 'px';
+            square.style.top = (coords.y * size.height) + 'px';
             square.style.display = "block";
         }, mapRef.current)
         return () => {
@@ -52,12 +54,18 @@ export default function Gameplay() {
         return () => clearInterval(timerId);
 
     }, [countdown])
+
+    
     return (
           <div className='screen'>
             <div className='stats'>
               <h1>Phind The Phighter!</h1>
               <h1>Timer: {timer} </h1>
-              <h1>{Math.round(pos.x)}, {Math.round(pos.y)}</h1>
+              <h1>
+                  X: {rect ? (pos.x.toFixed(3)) : 0},
+
+                 Y: {rect ? (pos.y.toFixed(3) ) : 0}
+              </h1>
             </div>
             <div className='gameScreen'>
               <div className='map' ref={mapRef}>
