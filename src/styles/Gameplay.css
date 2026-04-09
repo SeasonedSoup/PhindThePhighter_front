@@ -17,12 +17,16 @@
   position: absolute;
   transform: translate(-50%, -50%); 
   display: none;
+  pointer-events: none;
 }
 
 
 .map {
   margin-right: 1em;
   margin-top: 2em;
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
 }
 
 .map:hover {

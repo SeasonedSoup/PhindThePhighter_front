@@ -1,4 +1,4 @@
-import "../styles/TitleScreen.css"
+import "@/styles/TitleScreen.css"
 
 function TitleScreen() {
     return (

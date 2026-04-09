@@ -1,13 +1,20 @@
-const watchClicks = (cb) => {
-    
+const watchClicks = (cb, map) => {
+    if (!map) return;
+
     const handleClick = (e) => {
-        const coords = {x: e.pageX, y: e.pageY}
-        cb(coords)
+        const rect = map.getBoundingClientRect();
+        
+        let x =  e.clientX - rect.left
+        let y = e.clientY - rect.top
+        
+         x = (x / rect.width) * 100;
+         y = (y / rect.height) * 100;
+        cb({x, y})
     }
 
-    document.addEventListener('click', handleClick);
+    map.addEventListener('click', handleClick);
 
-    return () => document.removeEventListener('click', handleClick);
+    return () => map.removeEventListener('click', handleClick);
 }
 
 export default watchClicks

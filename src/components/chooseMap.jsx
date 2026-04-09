@@ -1,9 +1,9 @@
-import Skatepark from "../assets/BogioSkateparkSquare.png"
-import Museum from "../assets/RobloxMuseum.png"
-import CraterDust from "../assets/CraterdustCapital.png"
-import SkateparkLevel from "../assets/BogioSPS_Map.png"
+import Skatepark from "@/assets/maps/BogioSkateparkSquare.png"
+import Museum from "@/assets/maps/RobloxMuseum.png"
+import CraterDust from "@/assets/maps/CraterdustCapital.png"
+import SkateparkLevel from "@/assets/maps/BogioSPS_Map.png"
 
-import "../styles/chooseMap.css";
+import "@/styles/chooseMap.css";
 
 import { useNavigate } from "react-router";
 function ChooseMap() {

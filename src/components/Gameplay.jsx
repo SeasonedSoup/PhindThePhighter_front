@@ -1,31 +1,32 @@
-import testMap from '../assets/BogioSPS_Map.png';
+import testMap from '@/assets/maps/BogioSPS_Map.png';
 
-import { useEffect, useState } from 'react';
-import watchClicks from '../getcoordinate';
+import { useEffect, useRef, useState } from 'react';
+import watchClicks from '@/getcoordinate';
 
-import "../styles/Gameplay.css";
+import "@/styles/Gameplay.css";
 const initialSeconds = 3;
 
 export default function Gameplay() {
     const [pos, setPos] = useState({x:0, y: 0})
     const [countdown, setCountdown] = useState(initialSeconds);
     const [timer, setTimer] = useState(0);
+    const mapRef = useRef(null);
+
     //HANDLE CLICKS EFFECT
     useEffect(() => {
-        const stopWatching = watchClicks((coords) => {
+      if (mapRef.current) {
+         const stopWatching = watchClicks((coords) => {
             setPos(coords)
             const square = document.querySelector('.square');
     
-
-            square.style.left = coords.x + 'px';
-            square.style.top = coords.y + 'px';
+            square.style.left = coords.x + '%';
+            square.style.top = coords.y + '%';
             square.style.display = "block";
-        })
-
-
+        }, mapRef.current)
         return () => {
             stopWatching();
         }
+      }
     }, [])
 
     //HANDLE TIMER EFFECT 
@@ -37,7 +38,7 @@ export default function Gameplay() {
         }, 1000)
 
         return () => clearInterval(countdownId);
-    })
+    }, [countdown])
 
     //HANDLE SCORE EFFECT 
     useEffect(() => {
@@ -56,12 +57,12 @@ export default function Gameplay() {
             <div className='stats'>
               <h1>Phind The Phighter!</h1>
               <h1>Timer: {timer} </h1>
-              <h2>Current pos X:{pos.x}, Y:{pos.y}</h2>
+              <h1>{Math.round(pos.x)}, {Math.round(pos.y)}</h1>
             </div>
             <div className='gameScreen'>
-              <div className='map'>
+              <div className='map' ref={mapRef}>
                 <img src={testMap} alt="selected map" />
-                  <div className='square'></div>
+                <div className='square'></div>
               </div>
             </div>
 
@@ -77,7 +78,7 @@ export default function Gameplay() {
     )
 }
 
-import coil from "../assets/coil.png"
-import medkit from "../assets/medkit.png"
-import sword from "../assets/sword.png"
+import coil from "@/assets/characters/coil.png"
+import medkit from "@/assets/characters/medkit.png"
+import sword from "@/assets/characters/sword.png"
 
