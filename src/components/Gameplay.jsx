@@ -9,6 +9,7 @@ const initialSeconds = 3;
 export default function Gameplay() {
     const [pos, setPos] = useState({x:0, y: 0})
     const [countdown, setCountdown] = useState(initialSeconds);
+    const [timer, setTimer] = useState(0);
     //HANDLE CLICKS EFFECT
     useEffect(() => {
         const stopWatching = watchClicks((coords) => {
@@ -28,36 +29,55 @@ export default function Gameplay() {
     }, [])
 
     //HANDLE TIMER EFFECT 
-
     useEffect(() => {
         if (countdown <= 0) return;
 
-        const timerId = setInterval(() => {
+        const countdownId = setInterval(() => {
             setCountdown((prev) => Math.max(0, prev - 1));
         }, 1000)
 
-        return () => clearInterval(timerId);
+        return () => clearInterval(countdownId);
     })
+
+    //HANDLE SCORE EFFECT 
+    useEffect(() => {
+      if (countdown > 0) return;
+      
+      const timerId = setInterval(() => {
+        setTimer((prev) => Math.max(0, prev + 1));
+      }, 1000)
+
+      
+        return () => clearInterval(timerId);
+
+    }, [countdown])
     return (
           <div className='screen'>
-      <div className='square'></div>
-      <div className='stats'>
-        <h1>Phind The Phighter!</h1>
-        <h1>Starting game in {countdown} </h1>
-        <h2>Current pos X:{pos.x}, Y:{pos.y}</h2>
-        <h2>Choose a map and characters to find!</h2>
-      </div>
-      <div className='gameScreen'>
-        <div className='map'>
-          <img src={testMap} alt="selected map" />
-        </div>
-      </div>
+            <div className='stats'>
+              <h1>Phind The Phighter!</h1>
+              <h1>Timer: {timer} </h1>
+              <h2>Current pos X:{pos.x}, Y:{pos.y}</h2>
+            </div>
+            <div className='gameScreen'>
+              <div className='map'>
+                <img src={testMap} alt="selected map" />
+                  <div className='square'></div>
+              </div>
+            </div>
 
-      <div className='dropdownMenu'>
-        FIND THESE CHARACTERS!
-        <button>Confirm</button>
-      </div>
-    </div>
+            <div className='dropdownMenu'>
+              <h1>PHIND THESE CHARACTERS!</h1>
+              <div className='characters'>
+                <img src={coil} alt="coil" />
+                <img src={medkit} alt="medkit" />
+                <img src={sword} alt="sword" />
+              </div>
+            </div>
+          </div>
     )
 }
+
+import coil from "../assets/coil.png"
+import medkit from "../assets/medkit.png"
+import sword from "../assets/sword.png"
 
