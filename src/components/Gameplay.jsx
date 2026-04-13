@@ -8,8 +8,8 @@ const initialSeconds = 3;
 
 export default function Gameplay() {
     const [pos, setPos] = useState({x:0, y: 0})
-    const [countdown, setCountdown] = useState(initialSeconds);
-    const [timer, setTimer] = useState(0);
+    const [countdown, setCountdown] = useState(sessionStorage.getItem("cdFinished") ? 0 : initialSeconds);
+    const [timer, setTimer] = useState(() => sessionStorage.getItem("seconds") ? JSON.parse(sessionStorage.getItem("seconds")): 0);
     const [rect, setRect] = useState(null);
     const mapRef = useRef(null);
 
@@ -54,6 +54,19 @@ export default function Gameplay() {
         return () => clearInterval(timerId);
 
     }, [countdown])
+
+    //PREVENT COUNTDOWN RESET
+    useEffect(() => {
+      if (countdown == 0) {
+        sessionStorage.setItem("cdFinished",true);
+      }
+    }, [countdown])
+    
+    //HANDLE TIMER PERSISTENCE 
+    useEffect(() => {
+      sessionStorage.setItem("seconds", timer);
+    }, [timer])
+
 
     
     return (
