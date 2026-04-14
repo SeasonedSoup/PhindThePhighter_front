@@ -104,8 +104,7 @@ export default function Gameplay() {
         [index]: newStatus 
       }
     })
-
-    async function createName
+    
     }
     return (
           <div className='screen'>
