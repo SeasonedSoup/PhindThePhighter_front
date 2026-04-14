@@ -2,7 +2,8 @@ import testMap from '@/assets/maps/BogioSPS_Map.png';
 
 import { useEffect, useRef, useState } from 'react';
 import watchClicks from '@/getcoordinate';
-
+import getUrl from '../getUrl';
+import { formatTime } from '../formatTimer';
 import "@/styles/Gameplay.css";
 const initialSeconds = 3;
 
@@ -13,6 +14,9 @@ export default function Gameplay() {
     const [rect, setRect] = useState(null);
     const mapRef = useRef(null);
 
+    const [phighterStatus, setPhighterStatus] = useState({1: 'Not Found', 2: "Not Found", 3: "Not Found"})
+
+    //USE EFFECTS
     //HANDLE CLICKS EFFECT
     useEffect(() => {
       if (mapRef.current) {
@@ -31,6 +35,15 @@ export default function Gameplay() {
       }
     }, [])
 
+    //HANDLE ALL FOUND EFFECT
+    useEffect(() => {
+      const phightersAllFound = Object.values(phighterStatus).every((status) => status !== 'Not Found') 
+      console.log('Are all found', phightersAllFound);
+      if (phightersAllFound) {
+        prompt(`You Phound All Phighters! Enter your name for the Leaderboard Time: ${formatTime(timer)}`)
+      }
+    }, [phighterStatus, timer])
+
     //HANDLE TIMER EFFECT 
     useEffect(() => {
         if (countdown <= 0) return;
@@ -47,8 +60,12 @@ export default function Gameplay() {
       if (countdown > 0) return;
       
       const timerId = setInterval(() => {
-        setTimer((prev) => Math.max(0, prev + 1));
-      }, 1000)
+        setTimer((prev) => {
+          const next = prev + 10
+          sessionStorage.setItem("seconds", JSON.stringify(next));
+          return next;
+        });
+      }, 10)
 
       
         return () => clearInterval(timerId);
@@ -67,17 +84,43 @@ export default function Gameplay() {
       sessionStorage.setItem("seconds", timer);
     }, [timer])
 
+    //ASYNC FUNCTION CALLS
 
-    
+    async function validateAnswer(character, index) {
+      const response = await fetch(getUrl(), {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({character: character, coordinates: pos})
+      })
+    const result = await response.json()
+    console.log("Status: ", result.status)
+
+    setPhighterStatus((prev) => {
+      const newStatus = result.status === 'Found' ? 'Found' :'Not Found';
+      return {
+        ...prev, 
+        [index]: newStatus 
+      }
+    })
+
+    async function createName
+    }
     return (
           <div className='screen'>
+            {countdown > 0 && <div className='modal'>
+              <div className='modal-content'>
+                Game is about to start in: {countdown}
+              </div>
+            </div>}
             <div className='stats'>
               <h1>Phind The Phighter!</h1>
-              <h1>Timer: {timer} </h1>
+              <h1>Timer: {formatTime(timer)} </h1>
               <h1>
-                  X: {rect ? (pos.x.toFixed(3)) : 0},
+                  X: {rect ? (pos.x * 100).toFixed(1) : 0},
 
-                 Y: {rect ? (pos.y.toFixed(3) ) : 0}
+                 Y: {rect ? (pos.y * 100).toFixed(1) : 0}
               </h1>
             </div>
             <div className='gameScreen'>
@@ -92,25 +135,25 @@ export default function Gameplay() {
               <div className='characters'>
                 <div className='characterCard'>
                   <img src={coil} alt="coil" />
-                  <div className='choices'>
-                     <img className="cancel" src={cancel} alt="cancel" />
-                    <img className="confirm" src={confirm} alt="confirm" />
+                  <h3>{phighterStatus[1]}</h3>
+                  <div className='choices'>                    
+                    <img className="confirm" src={confirm} alt="confirm" onClick={() => validateAnswer('Coil', 1)}/>
                   </div>
                 </div>
                 
                  <div className='characterCard'>
                   <img src={medkit} alt="medkit" />
+                  <h3>{phighterStatus[2]}</h3>
                   <div className='choices'>
-                     <img className="cancel" src={cancel} alt="cancel" />
-                    <img className="confirm" src={confirm} alt="confirm" />
+                    <img className="confirm" src={confirm} alt="confirm" onClick={() => validateAnswer('Medkit', 2)}/>
                   </div>
                 </div>
 
                  <div className='characterCard'>
                   <img src={sword} alt="sword" />
+                  <h3>{phighterStatus[3]}</h3>
                   <div className='choices'>
-                     <img className="cancel" src={cancel} alt="cancel" />
-                    <img className="confirm" src={confirm} alt="confirm" />
+                    <img className="confirm" src={confirm} alt="confirm" onClick={() => validateAnswer('Sword', 3)}/>
                   </div>
                 </div>
               </div>
@@ -123,5 +166,4 @@ import coil from "@/assets/characters/coil.png"
 import medkit from "@/assets/characters/medkit.png"
 import sword from "@/assets/characters/sword.png"
 
-import cancel from "@/assets/icons/X.png"
 import confirm from "@/assets/icons/check-mark.png"
