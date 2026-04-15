@@ -1,10 +1,11 @@
 import testMap from '@/assets/maps/BogioSPS_Map.png';
 
 import { useEffect, useRef, useState } from 'react';
-import watchClicks from '@/getcoordinate';
-import getUrl from '../getUrl';
-import { formatTime } from '../formatTimer';
+import watchClicks from '@/utils/getcoordinate';
+import getUrl from '../utils/getUrl';
+import { formatTime } from '../utils/formatTimer';
 import "@/styles/Gameplay.css";
+import ScoreForm from './ScoreForm';
 const initialSeconds = 3;
 
 export default function Gameplay() {
@@ -15,6 +16,7 @@ export default function Gameplay() {
     const mapRef = useRef(null);
 
     const [phighterStatus, setPhighterStatus] = useState({1: 'Not Found', 2: "Not Found", 3: "Not Found"})
+    const winCondition = Object.values(phighterStatus).every((status) => status === 'Found');
 
     //USE EFFECTS
     //HANDLE CLICKS EFFECT
@@ -34,16 +36,6 @@ export default function Gameplay() {
         }
       }
     }, [])
-
-    //HANDLE ALL FOUND EFFECT
-    useEffect(() => {
-      const phightersAllFound = Object.values(phighterStatus).every((status) => status !== 'Not Found') 
-      console.log('Are all found', phightersAllFound);
-      if (phightersAllFound) {
-        prompt(`You Phound All Phighters! Enter your name for the Leaderboard Time: ${formatTime(timer)}`)
-      }
-    }, [phighterStatus, timer])
-
     //HANDLE TIMER EFFECT 
     useEffect(() => {
         if (countdown <= 0) return;
@@ -57,7 +49,7 @@ export default function Gameplay() {
 
     //HANDLE SCORE EFFECT 
     useEffect(() => {
-      if (countdown > 0) return;
+      if (countdown > 0 || winCondition) return;
       
       const timerId = setInterval(() => {
         setTimer((prev) => {
@@ -70,7 +62,7 @@ export default function Gameplay() {
       
         return () => clearInterval(timerId);
 
-    }, [countdown])
+    }, [countdown, winCondition])
 
     //PREVENT COUNTDOWN RESET
     useEffect(() => {
@@ -104,7 +96,6 @@ export default function Gameplay() {
         [index]: newStatus 
       }
     })
-    
     }
     return (
           <div className='screen'>
@@ -113,6 +104,7 @@ export default function Gameplay() {
                 Game is about to start in: {countdown}
               </div>
             </div>}
+            { winCondition === true && <ScoreForm score={timer}/> }
             <div className='stats'>
               <h1>Phind The Phighter!</h1>
               <h1>Timer: {formatTime(timer)} </h1>
