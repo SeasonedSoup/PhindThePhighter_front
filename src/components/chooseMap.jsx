@@ -8,9 +8,14 @@ import "@/styles/chooseMap.css";
 import { useNavigate } from "react-router";
 function ChooseMap() {
     const navigate = useNavigate()
+    //test 
+    //function startGame(mapName) {
+     //   navigate(`/game/${mapName}`, {state: SkateparkLevel});
+    //}
 
-    function startGame(mapName) {
-        navigate(`/game/${mapName}`, {state: SkateparkLevel});
+    //test 2 
+    function viewMapInfo() {
+        navigate('/mapInfo')
     }
 
     return (
@@ -18,7 +23,7 @@ function ChooseMap() {
             <h1>Choose A Map</h1>
 
             <div className="images">
-                <div className="mapChoice" onClick={() => startGame("Boggio-Skatepark")}>
+                <div className="mapChoice" onClick={() => viewMapInfo()}>
                     <img src={Skatepark} alt="skatepark" />
                     <a>Boggio Skatepark</a>
                 </div>
