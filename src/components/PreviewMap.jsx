@@ -1,9 +1,12 @@
 import getUrl from '../utils/getUrl'
 import { useEffect, useState } from 'react';
+import {useNavigate, useParams} from 'react-router';
 import { formatTime } from '../utils/formatTimer';
+
 function PreviewMap() {
     const [topPlayers, setTopPlayers] = useState([]);
-
+    const navigate = useNavigate();
+    const {mapName} = useParams();
     useEffect(() => {
          async function fetchTopTenPlayers() {
             const response = await fetch(getUrl() + '/1/mapInfo', {
@@ -26,20 +29,27 @@ function PreviewMap() {
         fetchTopTenPlayers();
     }, [])
 
+    function startGame() {
+        navigate('/game/BoggioSkatePark')
+    }
+
     
     return (
         <div>
+            <h1>ACTUAL NAME: {mapName}</h1>
             <h1>Map name: Boggio Skatepark</h1>
             <img src={map} alt="test map" style={{ height: "200px", width: "200px" }}/>
 
             <h1>Leaderboard</h1>
-            {topPlayers.map((player) => {
+            {topPlayers.map((player, i) => {
                 return (
                     <div key={player.id}>
-                        <h1>{player.name} {formatTime(player.timeTakenMs)}</h1>
+                        <h1> #{i + 1}: {player.name} {formatTime(player.timeTakenMs)}</h1>
                     </div>
                 )
             })}
+
+            <button onClick={startGame}>Play Map</button>
         </div>
     )
 }

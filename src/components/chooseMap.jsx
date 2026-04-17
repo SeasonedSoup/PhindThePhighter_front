@@ -8,32 +8,28 @@ import "@/styles/chooseMap.css";
 import { useNavigate } from "react-router";
 function ChooseMap() {
     const navigate = useNavigate()
-    //test 
-    //function startGame(mapName) {
-     //   navigate(`/game/${mapName}`, {state: SkateparkLevel});
-    //}
 
-    //test 2 
-    function viewMapInfo() {
-        navigate('/mapInfo')
+    function viewMapInfo(mapName, mapImg) {
+        navigate(`/mapInfo/${mapName}`, {state: mapImg});
     }
+
 
     return (
         <div className="layout">
             <h1>Choose A Map</h1>
 
             <div className="images">
-                <div className="mapChoice" onClick={() => viewMapInfo()}>
+                <div className="mapChoice" onClick={() => viewMapInfo("Boggio-Skatepark")}>
                     <img src={Skatepark} alt="skatepark" />
                     <a>Boggio Skatepark</a>
                 </div>
                 
-                <div className="mapChoice">
+                <div className="mapChoice" onClick={() => viewMapInfo("Roblox-Museum")}>
                     <img src={Museum} alt="museum" />
                     <a>Roblox Museum</a>
                 </div>
 
-                <div className="mapChoice">
+                <div className="mapChoice" onClick={() => viewMapInfo("Crater-Dust-Capital")}>
                     <img src={CraterDust} alt="a crazy city" />
                     <a>Craterdust Capital</a>
                 </div>

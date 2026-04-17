@@ -19,7 +19,7 @@ const router = createBrowserRouter([
     element: <ChooseMap/>
   },
   {
-    path: "/mapInfo",
+    path: "/mapInfo/:mapName",
     element: <PreviewMap/>
   },
   {
