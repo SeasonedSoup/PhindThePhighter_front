@@ -1,15 +1,18 @@
 import getUrl from '../utils/getUrl'
 import { useEffect, useState } from 'react';
-import {useNavigate, useParams} from 'react-router';
+import {useLocation, useNavigate, useParams} from 'react-router';
 import { formatTime } from '../utils/formatTimer';
 
 function PreviewMap() {
     const [topPlayers, setTopPlayers] = useState([]);
     const navigate = useNavigate();
     const {mapName} = useParams();
+    const location = useLocation();
+
     useEffect(() => {
          async function fetchTopTenPlayers() {
-            const response = await fetch(getUrl() + '/1/mapInfo', {
+            console.log(location.state.id)
+            const response = await fetch(getUrl() + `/${location.state.id}/mapInfo`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'
@@ -27,7 +30,7 @@ function PreviewMap() {
         }
 
         fetchTopTenPlayers();
-    }, [])
+    }, [location.state.id])
 
     function startGame() {
         navigate('/game/BoggioSkatePark')
@@ -36,18 +39,18 @@ function PreviewMap() {
     
     return (
         <div>
-            <h1>ACTUAL NAME: {mapName}</h1>
+            <h1>ACTUAL NAME: {mapName.split("-").join(" ")}</h1>
             <h1>Map name: Boggio Skatepark</h1>
             <img src={map} alt="test map" style={{ height: "200px", width: "200px" }}/>
 
             <h1>Leaderboard</h1>
-            {topPlayers.map((player, i) => {
+            {topPlayers.length > 0 ? topPlayers.map((player, i) => {
                 return (
                     <div key={player.id}>
                         <h1> #{i + 1}: {player.name} {formatTime(player.timeTakenMs)}</h1>
                     </div>
                 )
-            })}
+            }) : <h1>CURRENTLY NOONE IN THE LEADERBOARD BE THE FIRST!</h1>}
 
             <button onClick={startGame}>Play Map</button>
         </div>
