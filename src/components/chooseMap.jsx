@@ -15,22 +15,22 @@ function ChooseMap() {
 
     return (
         <div className="layout">
-            <h1>Choose A Map</h1>
+            <h1 className="heroText">Choose A Map</h1>
 
             <div className="images">
                 <div className="mapChoice" onClick={() => viewMapInfo("Boggio-Skatepark", 1)}>
                     <img src={Skatepark} alt="skatepark" />
-                    <a>Boggio Skatepark</a>
+                    <h3 className="mapName">Boggio Skatepark</h3>
                 </div>
                 
                 <div className="mapChoice" onClick={() => viewMapInfo("Roblox-Museum", 2)}>
                     <img src={Museum} alt="museum" />
-                    <a>Roblox Museum</a>
+                    <h3 className="mapName" >Roblox Museum</h3>
                 </div>
 
                 <div className="mapChoice" onClick={() => viewMapInfo("Craterdust-Capital", 3)}>
                     <img src={CraterDust} alt="a crazy city" />
-                    <a>Craterdust Capital</a>
+                    <h3 className="mapName">Craterdust Capital</h3>
                 </div>
             </div>
         </div>

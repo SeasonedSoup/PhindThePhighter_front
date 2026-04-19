@@ -5,7 +5,7 @@
     align-items: center;
     width: 100vw;
     height: 100vh;
-    background: url('../assets/icons/crossroads.png') no-repeat center / contain;
+    background: url('../assets/icons/crossroads2.png') no-repeat center / cover;
     background-color: rgb(98, 207, 250);
   }
 
@@ -13,7 +13,7 @@
   display: flex;
   flex-direction: column;
   margin-left: 14%;
-  margin-right: 35%;
+  margin-right: 40%;
   margin-top: 25%;
   gap: 6em;
 }
@@ -30,12 +30,19 @@
   line-height: 64px;
   display: inline-block;
   transform: scale(2);
+  border: 2px solid black;
+
+  box-shadow:
+    -8px -2px 0 #000,  
+     2px -2px 0 #000,
+    -8px  2px 0 #000,
+     2px  2px 0 #000;;
 }
 
 .titleBtn:hover {
-  color: rgba(80, 80, 80, 1); 
+  color: rgba(80, 80, 80, 1);
+  background-color: rgba(255, 255, 255, 0.7)
 }
-
 .titleContainer {
   height: 100%;
   display: flex;
