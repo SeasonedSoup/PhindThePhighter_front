@@ -1,7 +1,6 @@
 import Skatepark from "@/assets/maps/BogioSkateparkSquare.png"
 import Museum from "@/assets/maps/RobloxMuseum.png"
 import CraterDust from "@/assets/maps/CraterdustCapital.png"
-import SkateparkLevel from "@/assets/maps/BogioSPS_Map.png"
 
 import "@/styles/chooseMap.css";
 
@@ -29,7 +28,7 @@ function ChooseMap() {
                     <a>Roblox Museum</a>
                 </div>
 
-                <div className="mapChoice" onClick={() => viewMapInfo("Crater-Dust-Capital", 3)}>
+                <div className="mapChoice" onClick={() => viewMapInfo("Craterdust-Capital", 3)}>
                     <img src={CraterDust} alt="a crazy city" />
                     <a>Craterdust Capital</a>
                 </div>

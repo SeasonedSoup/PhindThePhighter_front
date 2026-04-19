@@ -2,6 +2,7 @@ import getUrl from '../utils/getUrl'
 import { useEffect, useState } from 'react';
 import {useLocation, useNavigate, useParams} from 'react-router';
 import { formatTime } from '../utils/formatTimer';
+import getMap from '../utils/getMap';
 
 function PreviewMap() {
     const [topPlayers, setTopPlayers] = useState([]);
@@ -39,9 +40,8 @@ function PreviewMap() {
     
     return (
         <div>
-            <h1>ACTUAL NAME: {mapName.split("-").join(" ")}</h1>
-            <h1>Map name: Boggio Skatepark</h1>
-            <img src={map} alt="test map" style={{ height: "200px", width: "200px" }}/>
+            <h1>Map name: {mapName.split("-").join(" ")}</h1>
+            <img src={getMap(location.state.id)} alt="test map" style={{ height: "200px", width: "200px" }}/>
 
             <h1>Leaderboard</h1>
             {topPlayers.length > 0 ? topPlayers.map((player, i) => {
@@ -58,5 +58,3 @@ function PreviewMap() {
 }
 
 export default PreviewMap;
-
-import map from "@/assets/maps/BogioSkateparkSquare.png"
