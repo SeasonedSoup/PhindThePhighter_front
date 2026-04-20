@@ -18,11 +18,15 @@ export default function Gameplay() {
     const [rect, setRect] = useState(null);
     const mapRef = useRef(null);
     const {mapName} = useParams();
+
     const currentMap = getMapImgByName(mapName)
-    const [phighterStatus, setPhighterStatus] = useState({1: 'Not Found', 2: "Not Found", 3: "Not Found"})
+    
+    //Relevant phighters on map TO DO: save them
     const {phighters} = getPhightersByMapName(mapName)
+    const [phighterStatus, setPhighterStatus] = useState({1: 'Not Found', 2: "Not Found", 3: "Not Found"})
     const winCondition = Object.values(phighterStatus).every((status) => status === 'Found');
 
+    //USE EFFECT FOR SQUARE
     useEffect(() => {
       if (mapRef.current) {
          const stopWatching = watchClicks((coords) => {
@@ -39,6 +43,21 @@ export default function Gameplay() {
         }
       }
     }, [])
+
+
+    useEffect(() => {
+    // 1. Wipe the "hard drive"
+    sessionStorage.removeItem("seconds");
+    sessionStorage.removeItem("cdFinished");
+
+    // 2. Wipe the "RAM" (State)
+    // These calls are safe because timer/countdown are NOT in the [mapName] array below
+    setTimer(0);
+    setCountdown(3);
+    setPhighterStatus({1: 'Not Found', 2: "Not Found", 3: "Not Found"});
+
+}, [mapName]);
+    //TIMER RELATED 
     //HANDLE TIMER EFFECT 
     useEffect(() => {
         if (countdown <= 0) return;
