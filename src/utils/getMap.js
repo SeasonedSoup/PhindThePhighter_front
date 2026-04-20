@@ -27,3 +27,12 @@ const mapNames = {
 export function getMapByName(mapname) {
     return mapNames[mapname];
 }
+
+const ids = {
+    "Bogio-Skatepark" : 1 ,
+    "Roblox-Museum": 2,
+    "Craterdust-Capital" : 3
+}
+export function getIdByMapName(mapname) {
+    return ids[mapname];
+}

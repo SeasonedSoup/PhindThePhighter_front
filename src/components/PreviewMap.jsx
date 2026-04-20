@@ -9,7 +9,7 @@ function PreviewMap() {
     const navigate = useNavigate();
     const {mapName} = useParams();
     const location = useLocation();
-
+    
     useEffect(() => {
          async function fetchTopTenPlayers() {
             console.log(location.state.id)

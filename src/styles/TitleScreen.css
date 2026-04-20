@@ -36,12 +36,17 @@
     -8px -2px 0 #000,  
      2px -2px 0 #000,
     -8px  2px 0 #000,
-     2px  2px 0 #000;;
+     2px  2px 0 #000;
 }
 
 .titleBtn:hover {
   color: rgba(80, 80, 80, 1);
-  background-color: rgba(255, 255, 255, 0.7)
+  background-color: rgba(255, 255, 255, 0.7);
+  transform: scale(2) translateY(-2px);
+}
+
+.titleBtn:active {
+  transform: scale(1.8) translateY(-4px);
 }
 .titleContainer {
   height: 100%;

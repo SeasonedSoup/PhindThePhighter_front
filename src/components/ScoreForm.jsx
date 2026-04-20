@@ -3,24 +3,31 @@ import getUrl from "@/utils/getUrl"
 import '@/styles/ScoreForm.css'
 import {useNavigate} from 'react-router'
 import { useState } from "react";
-export default function ScoreForm({score}) {
+export default function ScoreForm({score, mapId}) {
+    console.log(mapId)
     const navigate = useNavigate();
     const [submitting, setSubmitting] = useState(false);
     async function createHighScore(name) {
+        try {
+            const response = await fetch(getUrl() + '/create', {
+                method: 'POST',
+                headers: {
+                'Content-type': 'application/json'
+                },
+                body: JSON.stringify({name: name, score: score, mapId: mapId})
+            }) 
 
-      const response = await fetch(getUrl() + '/create', {
-        method: 'POST',
-        headers: {
-          'Content-type': 'application/json'
-        },
-        body: JSON.stringify({name: name, score: score})
-      }) 
-
-        if (response.ok) {
-            const result = await response.json();
-            console.log("Success:", result.message);
-            setSubmitting(false)
-            navigate('/');
+            if (response.ok) {
+                const result = await response.json();
+                console.log("Success:", result.message);
+                setSubmitting(false);
+                sessionStorage.setItem("seconds", 0)
+                navigate('/');
+                } 
+        } catch (err) {
+            console.error("Try again. Submission failed:", err);
+        } finally {
+            setSubmitting(false);
         }
     }
 

@@ -2,29 +2,27 @@ import "@/styles/Gameplay.css";
 
 import { useEffect, useRef, useState } from 'react';
 import { useParams } from "react-router";
+
+import { formatTime } from '@/utils/formatTimer';
+import { getMapByName } from "@/utils/getMap";
+import { getIdByMapName } from "../utils/getMap";
 import watchClicks from '@/utils/getcoordinate';
-import getUrl from '../utils/getUrl';
-import { formatTime } from '../utils/formatTimer';
-import { getMapByName } from "../utils/getMap";
+import getUrl from '@/utils/getUrl';
+
 
 import ScoreForm from './ScoreForm';
-const initialSeconds = 3;
 
 export default function Gameplay() {
     const [pos, setPos] = useState({x:0, y: 0})
-    const [countdown, setCountdown] = useState(sessionStorage.getItem("cdFinished") ? 0 : initialSeconds);
+    const [countdown, setCountdown] = useState(sessionStorage.getItem("cdFinished") === "true" ? 0 : 3);
     const [timer, setTimer] = useState(() => sessionStorage.getItem("seconds") ? JSON.parse(sessionStorage.getItem("seconds")): 0);
     const [rect, setRect] = useState(null);
     const mapRef = useRef(null);
     const {mapName} = useParams();
     const currentMap = getMapByName(mapName)
-    console.log(currentMap)
-    
     const [phighterStatus, setPhighterStatus] = useState({1: 'Not Found', 2: "Not Found", 3: "Not Found"})
     const winCondition = Object.values(phighterStatus).every((status) => status === 'Found');
 
-    //USE EFFECTS
-    //HANDLE CLICKS EFFECT
     useEffect(() => {
       if (mapRef.current) {
          const stopWatching = watchClicks((coords) => {
@@ -109,7 +107,7 @@ export default function Gameplay() {
                 Game is about to start in: {countdown}
               </div>
             </div>}
-            { winCondition === true && <ScoreForm score={timer}/> }
+            { winCondition === true && <ScoreForm score={timer} mapId={getIdByMapName(mapName)}/> }
             <div className='stats'>
               <h1>Phind The Phighter!</h1>
               <h1>Timer: {formatTime(timer)} </h1>
@@ -162,3 +160,4 @@ import coil from "@/assets/characters/coil.png"
 import medkit from "@/assets/characters/medkit.png"
 import sword from "@/assets/characters/sword.png"
 import confirm from "@/assets/icons/check-mark.png"
+
