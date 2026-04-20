@@ -4,8 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useParams } from "react-router";
 
 import { formatTime } from '@/utils/formatTimer';
-import { getMapByName } from "@/utils/getMap";
-import { getIdByMapName } from "../utils/getMap";
+import { getMapImgByName, getIdByMapName, getPhightersByMapName } from "@/utils/getMap";
 import watchClicks from '@/utils/getcoordinate';
 import getUrl from '@/utils/getUrl';
 
@@ -19,8 +18,9 @@ export default function Gameplay() {
     const [rect, setRect] = useState(null);
     const mapRef = useRef(null);
     const {mapName} = useParams();
-    const currentMap = getMapByName(mapName)
+    const currentMap = getMapImgByName(mapName)
     const [phighterStatus, setPhighterStatus] = useState({1: 'Not Found', 2: "Not Found", 3: "Not Found"})
+    const {phighters} = getPhightersByMapName(mapName)
     const winCondition = Object.values(phighterStatus).every((status) => status === 'Found');
 
     useEffect(() => {
@@ -128,26 +128,29 @@ export default function Gameplay() {
               <h1>PHIND THESE PHIGHTERS!</h1>
               <div className='characters'>
                 <div className='characterCard'>
-                  <img src={coil} alt="coil" />
-                  <h3>{phighterStatus[1]}</h3>
+                  <img src={phighters[0].img} alt="coil" />
+                  <h3>{phighterStatus[1].name}</h3>
                   <div className='choices'>                    
                     <img className="confirm" src={confirm} alt="confirm" onClick={() => validateAnswer('Coil', 1)}/>
+                    <h2>{phighters[0].name}</h2>
                   </div>
                 </div>
                 
                  <div className='characterCard'>
-                  <img src={medkit} alt="medkit" />
+                  <img src={phighters[1].img} alt="medkit" />
                   <h3>{phighterStatus[2]}</h3>
                   <div className='choices'>
                     <img className="confirm" src={confirm} alt="confirm" onClick={() => validateAnswer('Medkit', 2)}/>
+                    <h2>{phighters[1].name}</h2>
                   </div>
                 </div>
 
                  <div className='characterCard'>
-                  <img src={sword} alt="sword" />
+                  <img src={phighters[2].img} alt="sword" />
                   <h3>{phighterStatus[3]}</h3>
                   <div className='choices'>
                     <img className="confirm" src={confirm} alt="confirm" onClick={() => validateAnswer('Sword', 3)}/>
+                    <h2>{phighters[2].name}</h2>
                   </div>
                 </div>
               </div>
@@ -156,8 +159,5 @@ export default function Gameplay() {
     )
 }
 
-import coil from "@/assets/characters/coil.png"
-import medkit from "@/assets/characters/medkit.png"
-import sword from "@/assets/characters/sword.png"
 import confirm from "@/assets/icons/check-mark.png"
 
