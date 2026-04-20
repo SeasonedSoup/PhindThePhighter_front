@@ -9,7 +9,7 @@
 
 .heroText {
     color: white;
-    text-shadow: -2px -2px 0 black;
+    text-shadow: -2px -2px 0 black, -4px -4px  0 black, -8px -4px 0 black;
     font-size: 6em;
 }
 
@@ -28,6 +28,7 @@
     max-height: 300px;
     max-width: 300px;
     text-align: center;
+    cursor: pointer;
 }
 
 .mapName {

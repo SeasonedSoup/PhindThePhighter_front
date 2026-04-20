@@ -18,9 +18,9 @@ function ChooseMap() {
             <h1 className="heroText">Choose A Map</h1>
 
             <div className="images">
-                <div className="mapChoice" onClick={() => viewMapInfo("Boggio-Skatepark", 1)}>
+                <div className="mapChoice" onClick={() => viewMapInfo("Bogio-Skatepark", 1)}>
                     <img src={Skatepark} alt="skatepark" />
-                    <h3 className="mapName">Boggio Skatepark</h3>
+                    <h3 className="mapName">Bogio Skatepark</h3>
                 </div>
                 
                 <div className="mapChoice" onClick={() => viewMapInfo("Roblox-Museum", 2)}>

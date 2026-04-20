@@ -2,7 +2,7 @@ import getUrl from '../utils/getUrl'
 import { useEffect, useState } from 'react';
 import {useLocation, useNavigate, useParams} from 'react-router';
 import { formatTime } from '../utils/formatTimer';
-import getMap from '../utils/getMap';
+import {getMap} from '../utils/getMap';
 
 function PreviewMap() {
     const [topPlayers, setTopPlayers] = useState([]);
@@ -34,7 +34,7 @@ function PreviewMap() {
     }, [location.state.id])
 
     function startGame() {
-        navigate('/game/BoggioSkatePark')
+        navigate(`/game/${mapName}`);
     }
 
     

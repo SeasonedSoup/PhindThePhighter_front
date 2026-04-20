@@ -1,10 +1,12 @@
-import testMap from '@/assets/maps/BogioSPS_Map.png';
+import "@/styles/Gameplay.css";
 
 import { useEffect, useRef, useState } from 'react';
+import { useParams } from "react-router";
 import watchClicks from '@/utils/getcoordinate';
 import getUrl from '../utils/getUrl';
 import { formatTime } from '../utils/formatTimer';
-import "@/styles/Gameplay.css";
+import { getMapByName } from "../utils/getMap";
+
 import ScoreForm from './ScoreForm';
 const initialSeconds = 3;
 
@@ -14,7 +16,10 @@ export default function Gameplay() {
     const [timer, setTimer] = useState(() => sessionStorage.getItem("seconds") ? JSON.parse(sessionStorage.getItem("seconds")): 0);
     const [rect, setRect] = useState(null);
     const mapRef = useRef(null);
-
+    const {mapName} = useParams();
+    const currentMap = getMapByName(mapName)
+    console.log(currentMap)
+    
     const [phighterStatus, setPhighterStatus] = useState({1: 'Not Found', 2: "Not Found", 3: "Not Found"})
     const winCondition = Object.values(phighterStatus).every((status) => status === 'Found');
 
@@ -116,7 +121,7 @@ export default function Gameplay() {
             </div>
             <div className='gameScreen'>
               <div className='map' ref={mapRef}>
-                <img src={testMap} alt="selected map" />
+                <img src={currentMap} alt="selected map" />
                 <div className='square' ></div>
               </div>
             </div>
@@ -156,5 +161,4 @@ export default function Gameplay() {
 import coil from "@/assets/characters/coil.png"
 import medkit from "@/assets/characters/medkit.png"
 import sword from "@/assets/characters/sword.png"
-
 import confirm from "@/assets/icons/check-mark.png"
