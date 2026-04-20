@@ -23,7 +23,7 @@ export default function Gameplay() {
     
     //Relevant phighters on map TO DO: save them
     const {phighters} = getPhightersByMapName(mapName)
-    const [phighterStatus, setPhighterStatus] = useState({1: 'Not Found', 2: "Not Found", 3: "Not Found"})
+    const [phighterStatus, setPhighterStatus] = useState(sessionStorage.getItem("phighterStatusSession") ? JSON.parse(sessionStorage.getItem("phighterStatusSession")) : {1: 'Not Found', 2: "Not Found", 3: "Not Found"})
     const winCondition = Object.values(phighterStatus).every((status) => status === 'Found');
 
     //USE EFFECT FOR SQUARE
@@ -46,17 +46,22 @@ export default function Gameplay() {
 
 
     useEffect(() => {
-    // 1. Wipe the "hard drive"
-    sessionStorage.removeItem("seconds");
-    sessionStorage.removeItem("cdFinished");
+      const lastMap = sessionStorage.getItem("prevMap")
 
-    // 2. Wipe the "RAM" (State)
-    // These calls are safe because timer/countdown are NOT in the [mapName] array below
-    setTimer(0);
-    setCountdown(3);
-    setPhighterStatus({1: 'Not Found', 2: "Not Found", 3: "Not Found"});
+      if (lastMap !== mapName) {
+        sessionStorage.removeItem("seconds");
+        sessionStorage.removeItem("cdFinished");
+        sessionStorage.removeItem("phighterStatusSession");
+          const resetGame = () => {
+            setCountdown(3);
+            setTimer(0);
+            setPhighterStatus({1: 'Not Found', 2: "Not Found", 3: "Not Found"});
+          }
+          resetGame();
+      }
+      sessionStorage.setItem("prevMap", mapName)
 
-}, [mapName]);
+    }, [mapName]);
     //TIMER RELATED 
     //HANDLE TIMER EFFECT 
     useEffect(() => {
@@ -113,10 +118,10 @@ export default function Gameplay() {
 
     setPhighterStatus((prev) => {
       const newStatus = result.status === 'Found' ? 'Found' :'Not Found';
-      return {
-        ...prev, 
-        [index]: newStatus 
-      }
+
+      const updatedStatus = { ...prev, [index]: newStatus };
+      sessionStorage.setItem("phighterStatusSession", JSON.stringify(updatedStatus))
+      return updatedStatus
     })
     }
     return (
@@ -148,7 +153,7 @@ export default function Gameplay() {
               <div className='characters'>
                 <div className='characterCard'>
                   <img src={phighters[0].img} alt="coil" />
-                  <h3>{phighterStatus[1].name}</h3>
+                  <h3>{phighterStatus[1]}</h3>
                   <div className='choices'>                    
                     <img className="confirm" src={confirm} alt="confirm" onClick={() => validateAnswer('Coil', 1)}/>
                     <h2>{phighters[0].name}</h2>

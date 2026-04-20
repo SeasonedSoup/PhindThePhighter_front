@@ -22,6 +22,7 @@ export default function ScoreForm({score, mapId}) {
                 console.log("Success:", result.message);
                 setSubmitting(false);
                 sessionStorage.setItem("seconds", 0)
+                sessionStorage.removeItem("phighterStatusSession")
                 navigate('/');
                 } 
         } catch (err) {
