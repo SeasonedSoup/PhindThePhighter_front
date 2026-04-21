@@ -6,6 +6,10 @@
   font-weight: 900;
   font-style: italic;
 }
+
+html, body #root {
+  height: 100vh;
+}
 /* 1. Use a more-intuitive box-sizing model */
 *, *::before, *::after {
   box-sizing: border-box;

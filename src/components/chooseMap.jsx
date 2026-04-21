@@ -8,7 +8,7 @@ function ChooseMap() {
     const navigate = useNavigate()
 
     function viewMapInfo(mapName, mapId) {
-        navigate(`/mapInfo/${mapName}`, {state: {id: mapId}});
+        navigate(`/mapInfo/${mapName}`, { state: { id: mapId } });
     }
 
     function navigateToTitle() {
@@ -22,8 +22,8 @@ function ChooseMap() {
 
             <div className="images">
                 <div className="mapChoice" id="one"onClick={() => viewMapInfo("Bogio-Skatepark", 1)}>
-                    <img src={Skatepark} alt="skatepark" />
-                    <h3 className="mapName">Bogio Skatepark</h3>
+                        <img src={Skatepark} alt="skatepark" />
+                        <h3 className="mapName">Bogio Skatepark</h3>
                 </div>
                 
                 <div className="mapChoice" id="two" onClick={() => viewMapInfo("Roblox-Museum", 2)}>

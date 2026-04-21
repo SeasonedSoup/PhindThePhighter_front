@@ -12,6 +12,7 @@
     color: white;
     text-shadow: -2px -2px 0 black, -4px -4px  0 black, -8px -4px 0 black;
     font-size: 6em;
+    margin-bottom: 0.3em;
 }
 
 .images {
@@ -35,11 +36,11 @@
     cursor: pointer;
     pointer-events: auto; 
     border: 12px solid transparent; 
-    transition: all 0.2s ease-in-out;
+    transition: all 0.1s ease-in-out;
 }
 
 
-.mapChoice#one {
+#one {
     transform: rotateY(45deg)  rotateX(-5deg);
 }
 
@@ -47,7 +48,7 @@
     transform:  rotateX(-10deg);
 }
 
-.mapChoice#three {
+#three {
     transform:  rotateY(-45deg) rotateX(-5deg);
 }
 
@@ -61,6 +62,17 @@
                 0 0 25px white,
                 0 0 50px white;
     -webkit-box-reflect:below 1px linear-gradient(transparent, #0005);
+}
+
+.mapChoice:active {
+    border-color: rgba(255, 255, 255, 0);
+    outline: 24px solid white;
+    outline-offset: 10px; 
+   
+    box-shadow: 0 0 5px rgb(236, 232, 232),
+                0 0 15px white,
+                0 0 25px white,
+                0 0 50px white;
 }
 
 .mapName {
