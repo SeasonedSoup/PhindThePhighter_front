@@ -1,16 +1,32 @@
 import "@/styles/TitleScreen.css"
-
+import { useNavigate } from "react-router";
+import ost from '../assets/betterCrablooshi.mp3'
 function TitleScreen() {
+    const navigate = useNavigate();
+
+    function navigateToMapChoices() {
+        navigate('/maps')
+    }
+
     return (
         <div className="container">
             <div className="btns">
-                <a className="titleBtn" href="maps">Choose Map</a>
-                <a className="titleBtn"href="credits">Credits</a>
-                <a className="titleBtn" href="art">Artworks</a>
+                <button className="titleBtn" onClick={navigateToMapChoices}>Choose Map</button>
+                <button className="titleBtn">Credits</button>
+                <button className="titleBtn">Artworks</button>
             </div>
             <div className="titleContainer">
                 <h1 className="title"> Phind The <br/> Phighter!</h1>
+                <div className="soundTrack">
+                    <h3>"PHIGHT!" by: CRABLOOSHI</h3>
+                    <audio controls autoPlay loop muted>
+                    <source src={ost} type="audio/mpeg"/>
+                    </audio>
+                </div>
+               
             </div>
+            
+          
         </div>
     )
 }

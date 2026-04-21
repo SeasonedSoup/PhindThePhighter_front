@@ -52,3 +52,22 @@ h1, h2, h3, h4, h5, h6 {
 #root, #__next {
   isolation: isolate;
 }
+
+/* Optimized for lower-end hardware/Xubuntu */
+.intro-to-title::view-transition-old(root) {
+    animation: 1s ease-out both fade-out;
+}
+
+.intro-to-title::view-transition-new(root) {
+    animation: 1s ease-in both fade-in;
+}
+
+@keyframes fade-out {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+
+@keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
