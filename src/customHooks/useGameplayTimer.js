@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 const initialCountdown = 3
 
-export function useTimer() {
+export function useGameplayTimer(winCondition) {
     const [countdown, setCountdown] = useState(sessionStorage.getItem("cdFinished") === "true" ? 0 : initialCountdown);
     const [timer, setTimer] = useState(() => sessionStorage.getItem("seconds") ? JSON.parse(sessionStorage.getItem("seconds")): 0);
     
@@ -23,7 +23,7 @@ export function useTimer() {
     }, [countdown])
     
     useEffect(() => {
-        if (countdown > 0 ) return;
+        if (countdown > 0 || winCondition) return;
           
         const timerId = setInterval(() => {
         setTimer((prev) => {
@@ -33,7 +33,7 @@ export function useTimer() {
         });
         }, 10)  
         return () => clearInterval(timerId);
-    }, [countdown])
+    }, [countdown, winCondition])
     
     useEffect(() => {
         if (countdown == 0) {

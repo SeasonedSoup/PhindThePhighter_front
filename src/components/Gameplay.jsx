@@ -1,63 +1,44 @@
 import "@/styles/Gameplay.css";
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { useParams } from "react-router";
 
 import { formatTime } from '@/utils/formatTimer';
 import { getMapImgByName, getIdByMapName, getPhightersByMapName } from "@/utils/getMap";
-import watchClicks from '@/utils/getcoordinate';
 import getUrl from '@/utils/getUrl';
-import { useTimer } from "../customHooks/useTimer";
+import { useGameplayTimer } from "../customHooks/useGameplayTimer";
+import { usePhighterStatus } from "../customHooks/usePhighterStatus";
+import { useTrackerSquare } from "../customHooks/useTrackerSquare";
 import ScoreForm from './ScoreForm';
 
 export default function Gameplay() {
-    const [pos, setPos] = useState({x:0, y: 0})
-    const [rect, setRect] = useState(null);
-    const {countdown, timer, resetTimer} = useTimer();
-    
-    const mapRef = useRef(null);
-    const {mapName} = useParams();
-    const currentMap = getMapImgByName(mapName)
-    
-    //Relevant phighters on map TO DO: save them
-    const {phighters} = getPhightersByMapName(mapName)
-    const [phighterStatus, setPhighterStatus] = useState(sessionStorage.getItem("phighterStatusSession") ? JSON.parse(sessionStorage.getItem("phighterStatusSession")) : {1: 'Not Found', 2: "Not Found", 3: "Not Found"})
+    //checks if all phighters are found or not found then timer will adjust accordingly
+    const {phighterStatus, resetPhighterStatus, changePhighterStatus} = usePhighterStatus();
     const winCondition = Object.values(phighterStatus).every((status) => status === 'Found');
+    const {countdown, timer, resetTimer} = useGameplayTimer(winCondition);
 
-    //USE EFFECT FOR SQUARE
-    useEffect(() => {
-      if (mapRef.current) {
-         const stopWatching = watchClicks((coords) => {
-            setPos(coords)
-            const square = document.querySelector('.square');
-            const size = mapRef.current.getBoundingClientRect();
-            setRect(size)
-            square.style.left = (coords.x * size.width) + 'px';
-            square.style.top = (coords.y * size.height) + 'px';
-            square.style.display = "block";
-        }, mapRef.current)
-        return () => {
-            stopWatching();
-        }
-      }
-    }, [])
+    //for the square to know where the map is located
+    const mapRef = useRef(null);
+    const {pos, rect} = useTrackerSquare(mapRef);
 
-
+    //to be used for rendering proper map and chars
+    const {mapName} = useParams();  
+    const currentMap = getMapImgByName(mapName)
+    const {phighters} = getPhightersByMapName(mapName)
+    
+    //Check if map changed
     useEffect(() => {
       const lastMap = sessionStorage.getItem("prevMap")
 
       if (lastMap !== mapName) {
-        sessionStorage.removeItem("phighterStatusSession");
-          const resetGame = () => {
-            resetTimer();
-            setPhighterStatus({1: 'Not Found', 2: "Not Found", 3: "Not Found"});
-          }
-          resetGame();
+          resetTimer();
+          resetPhighterStatus();
       }
       sessionStorage.setItem("prevMap", mapName)
 
-    }, [mapName, resetTimer]);
+    }, [mapName, resetTimer, resetPhighterStatus]);
 
+    
     async function validateAnswer(character, index) {
       const response = await fetch(getUrl(), {
         method: 'POST',
@@ -67,16 +48,9 @@ export default function Gameplay() {
         body: JSON.stringify({character: character, coordinates: pos})
       })
     const result = await response.json()
-    console.log("Status: ", result.status)
-
-    setPhighterStatus((prev) => {
-      const newStatus = result.status === 'Found' ? 'Found' :'Not Found';
-
-      const updatedStatus = { ...prev, [index]: newStatus };
-      sessionStorage.setItem("phighterStatusSession", JSON.stringify(updatedStatus))
-      return updatedStatus
-    })
+      changePhighterStatus(result, index)  
     }
+  
     return (
           <div className='screen'>
             {countdown > 0 && <div className='modal'>
@@ -97,7 +71,7 @@ export default function Gameplay() {
             <div className='gameScreen'>
               <div className='map' ref={mapRef}>
                 <img src={currentMap} alt="selected map" />
-                <div className='square' ></div>
+                <div className='square' style={{ left: pos.x * rect.width + 'px', top: pos.y * rect.height + 'px'}} ></div>
               </div>
             </div>
 

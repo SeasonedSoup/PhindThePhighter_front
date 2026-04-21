@@ -12,10 +12,6 @@ function ChooseMap() {
         navigate(`/mapInfo/${mapName}`, {state: {id: mapId}});
     }
 
-    sessionStorage.setItem("seconds", 0)
-    sessionStorage.setItem("cdFinished",false);
-
-
     return (
         <div className="layout">
             <h1 className="heroText">Choose A Map</h1>

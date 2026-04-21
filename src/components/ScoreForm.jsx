@@ -3,8 +3,8 @@ import getUrl from "@/utils/getUrl"
 import '@/styles/ScoreForm.css'
 import {useNavigate} from 'react-router'
 import { useState } from "react";
+
 export default function ScoreForm({score, mapId}) {
-    console.log(mapId)
     const navigate = useNavigate();
     const [submitting, setSubmitting] = useState(false);
     async function createHighScore(name) {
