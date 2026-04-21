@@ -41,6 +41,7 @@ export default function ScoreForm({score, mapId}) {
         setSubmitting(true)
         await createHighScore(name);
     }
+    
     return (
         <div className="scoreForm">
             <form action="/create" className="scoreFormContent" onSubmit={submitScore}>

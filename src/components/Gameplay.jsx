@@ -7,18 +7,16 @@ import { formatTime } from '@/utils/formatTimer';
 import { getMapImgByName, getIdByMapName, getPhightersByMapName } from "@/utils/getMap";
 import watchClicks from '@/utils/getcoordinate';
 import getUrl from '@/utils/getUrl';
-
-
+import { useTimer } from "../customHooks/useTimer";
 import ScoreForm from './ScoreForm';
 
 export default function Gameplay() {
     const [pos, setPos] = useState({x:0, y: 0})
-    const [countdown, setCountdown] = useState(sessionStorage.getItem("cdFinished") === "true" ? 0 : 3);
-    const [timer, setTimer] = useState(() => sessionStorage.getItem("seconds") ? JSON.parse(sessionStorage.getItem("seconds")): 0);
     const [rect, setRect] = useState(null);
+    const {countdown, timer, resetTimer} = useTimer();
+    
     const mapRef = useRef(null);
     const {mapName} = useParams();
-
     const currentMap = getMapImgByName(mapName)
     
     //Relevant phighters on map TO DO: save them
@@ -49,61 +47,16 @@ export default function Gameplay() {
       const lastMap = sessionStorage.getItem("prevMap")
 
       if (lastMap !== mapName) {
-        sessionStorage.removeItem("seconds");
-        sessionStorage.removeItem("cdFinished");
         sessionStorage.removeItem("phighterStatusSession");
           const resetGame = () => {
-            setCountdown(3);
-            setTimer(0);
+            resetTimer();
             setPhighterStatus({1: 'Not Found', 2: "Not Found", 3: "Not Found"});
           }
           resetGame();
       }
       sessionStorage.setItem("prevMap", mapName)
 
-    }, [mapName]);
-    //TIMER RELATED 
-    //HANDLE TIMER EFFECT 
-    useEffect(() => {
-        if (countdown <= 0) return;
-
-        const countdownId = setInterval(() => {
-            setCountdown((prev) => Math.max(0, prev - 1));
-        }, 1000)
-
-        return () => clearInterval(countdownId);
-    }, [countdown])
-
-    //HANDLE SCORE EFFECT 
-    useEffect(() => {
-      if (countdown > 0 || winCondition) return;
-      
-      const timerId = setInterval(() => {
-        setTimer((prev) => {
-          const next = prev + 10
-          sessionStorage.setItem("seconds", JSON.stringify(next));
-          return next;
-        });
-      }, 10)
-
-      
-        return () => clearInterval(timerId);
-
-    }, [countdown, winCondition])
-
-    //PREVENT COUNTDOWN RESET
-    useEffect(() => {
-      if (countdown == 0) {
-        sessionStorage.setItem("cdFinished",true);
-      }
-    }, [countdown])
-    
-    //HANDLE TIMER PERSISTENCE 
-    useEffect(() => {
-      sessionStorage.setItem("seconds", timer);
-    }, [timer])
-
-    //ASYNC FUNCTION CALLS
+    }, [mapName, resetTimer]);
 
     async function validateAnswer(character, index) {
       const response = await fetch(getUrl(), {
