@@ -3,12 +3,14 @@
     justify-content: space-evenly;
     height: 100%;
     width: 100%;
+    background-color: rgb(215, 218, 196);
 }
 
 .mapPreview {
     display: flex;
     flex-direction: column;
     align-items: center;
+    position: relative;
 }
 
 .mapPreview img {
@@ -16,10 +18,41 @@
     box-shadow: 4px 8px 8px hsl(0deg 0% 0% / 0.37);
 }
 
+.mapTitle {
+    font-size: xx-large;
+    text-shadow:  -2px -2px 0  white, -4px 2px 0 white, -6px 2px 0  white, -2px -2px 0 white;
+    background-color: rgb(176, 202, 211);
+    border: solid 2px rgb(214, 214, 214);
+    border-radius: 8px;
+}
+
 .topTenLb {
    display: flex;
    flex-direction: column;
-   gap: 40px;
+   margin: 3em;
+}
+
+.lbBackground {
+    border: 8px solid rgb(103, 104, 103);
+    border-radius: 24px;
+    background-color: whitesmoke;
+    padding: 48px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    min-height: 1080px;
+    max-width: 850px;
+
+    box-shadow: 
+    10px -2px 0 #444,
+    15px -4px 0 #444,
+    20px -6px 0 #444,
+    25px -8px 0 #444,
+    30px -10px 0 #444,
+    35px -12px 0 #444,
+    40px -14px 0 #444,
+    45px -16px 0 #444,
+    50px -18px 0 #444;
 }
 
 .lbTitle {
@@ -34,6 +67,12 @@
     padding: 10px;
     border-radius: 12px;
     position: relative;
+    z-index: 1;
+    transition: transform 0.1s ease-in-out;
+}
+
+.player:hover {
+    transform: translateY(5px);
 }
 
 .player::before {
@@ -49,7 +88,30 @@
   box-shadow: 2px -2px 0 8px rgb(175, 175, 171); 
 }
 
-.visitLb {
-    align-self: center;
+.playBtn {
+    margin-top: 95%;
+    position: absolute;
+    scale: 2;
+    border-style: none;
+    transition: all 0.1s ease-in;
 }
+
+.playBtn:hover, .visitLbBtn:hover {
+    background-color: #b3b3b3;
+    scale: 2.2;
+}
+
+.visitLbBtn {
+    align-self: center;
+    scale: 2;
+    border: solid 2px black;
+    transition: all 0.1s ease-in;
+}
+
+.emptyLb {
+    text-align: center;
+    font-size: xxx-large;
+ }
+
+
 

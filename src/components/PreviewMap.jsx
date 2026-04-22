@@ -42,28 +42,38 @@ function PreviewMap() {
     return (
         <div className='previewMapLayout'>
             <div className='mapPreview'>
-                <h1>Map name: {mapName.split("-").join(" ")}</h1>
+                <div className='mapTitle'>
+                    <h1>{mapName.split("-").join(" ")}</h1>
+                </div>
                 <img src={getMap(location.state.id)}/>
-                <button onClick={startGame}>Play Map</button>
+                <button className='playBtn' onClick={startGame}>Play Map</button>
             </div>
 
             <div className='topTenLb'>
-                <h1 className='lbTitle'>Top 10 Leaderboard</h1>
-                {topPlayers.length > 0 ? topPlayers.map((player, i) => {
-                return (
-                    <div className='player' key={player.id}>
-                        <div className="name">
-                            <h1> {i + 1}. {player.name}</h1>
-                        </div>
-                        <div>
-                         <div className="timeTaken">
-                            <h1> {formatTime(player.timeTakenMs)}</h1>
-                        </div>
-                        </div>
+               
+                    { topPlayers.length > 0 ? (
+                    <div className='lbBackground'>
+                        <h1 className='lbTitle'>Top 10 Leaderboard</h1>
+                        { topPlayers.map((player, i) => {
+                        return (
+                            <div className='player' key={player.id}>
+                                <div className="name">
+                                    <h1> {i + 1}. {player.name}</h1>
+                                </div>
+                                 <div className="timeTaken">
+                                <h1> {formatTime(player.timeTakenMs)}</h1>
+                                </div>
+                            </div>
+                            );
+                        })}
+                        <button className='visitLbBtn'>Visit Leaderboard</button>
                     </div>
-                )
-                }) : <h1 className='emptyLb'>CURRENTLY NOONE IN THE LEADERBOARD BE THE FIRST!</h1>}
-                <button className='visitLb'>Visit Leaderboard</button>
+                    
+                    ) : ( <div className='lbBackground'>
+                            <h1 className='emptyLb'>There are currently no top 10 players. Be the first!</h1>
+                            <button className='visitLbBtn'>Visit Leaderboard</button>
+                        </div>)
+                    }
             </div>
         </div>
     )
