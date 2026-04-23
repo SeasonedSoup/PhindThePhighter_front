@@ -2,7 +2,7 @@ import { useState } from "react"
 
 export function usePhighterStatus() {
     //Status of phighters when gameplay starts
-    const initialStatus = {0: 'Not Found', 1: "Not Found", 2: "Not Found"};
+    const initialStatus = {1: 'Not Found', 2: "Not Found", 3: "Not Found"};
 
     const [phighterStatus, setPhighterStatus] = useState (
     sessionStorage.getItem("phighterStatusSession") ? JSON.parse(sessionStorage.getItem("phighterStatusSession")) : initialStatus
