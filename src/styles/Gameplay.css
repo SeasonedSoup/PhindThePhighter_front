@@ -1,7 +1,10 @@
 .screen {
   display: flex;
   width: 100%;
+  background-color: rgb(136, 170, 170);
+  height: 100%;
 }
+
 
 .modal {
   position: fixed; 
@@ -27,8 +30,8 @@
 
 .gameScreen {
   display: flex;
-  flex: 3;
   justify-content: center;
+  align-items: center;
   height: 100%;
 }
 
@@ -44,14 +47,9 @@
   pointer-events: none;
 }
 
-
 .map {
-  margin-right: 1em;
-  margin-top: 2em;
   position: relative;
   overflow: hidden;
-  height: 100%;
-  
 }
 
 .map:hover {
@@ -66,30 +64,45 @@
   border-radius: 12px;
 }
 
-.dropdownMenu {
+.sidebar {
+  background-color: rgb(221, 218, 218);
   flex: 2;
-  flex-direction: column;
   display: flex;
-  margin-top: 20em;
-  align-items: center;
+  flex-direction: column;
 }
 
-.characterCard {
-  height: 400px;
-  width: 300px;
-  padding: 2em;
-  border-radius: 12px;
-  border: 2px solid black;
+.sidebar h1 {
+  text-align: center;
+}
+
+.instructionTitle {
+  font-size: 3em;
+  text-decoration: underline;
+}
+
+.dropDownMenu {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 2;
 }
 
 .characters {
   display: flex;
-  gap: 5em;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 40px;
 }
 
+.characterCard {
+  height: 20em;
+  width: 15em;
+  border-radius: 12px;
+  border: 2px solid black;
+}
+
+
 .characters img {
-  max-width: 96px;
-  max-height: 96px;
   height: auto; 
   width: auto;
     
@@ -100,12 +113,21 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  background-color: white;
+}
+
+.phighterName {
+  align-self: start;
 }
 
 .choices {
   display: flex;
   gap: 5px;
   align-items: center;
+}
+
+.status {
+  flex-grow: 2;
 }
 
 img.cancel {

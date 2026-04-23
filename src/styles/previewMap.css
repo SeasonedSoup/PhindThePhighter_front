@@ -4,6 +4,7 @@
     height: 100%;
     width: 100%;
     background-color: rgb(215, 218, 196);
+    align-items: center;
 }
 
 .mapPreview {
@@ -21,10 +22,15 @@
 .mapTitle {
     font-size: xx-large;
     text-shadow:  -2px -2px 0  white, -4px 2px 0 white, -6px 2px 0  white, -2px -2px 0 white;
-    background-color: rgb(176, 202, 211);
+    background-color: rgb(136, 157, 163);
     border: solid 2px rgb(214, 214, 214);
-    border-radius: 8px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
 }
+
+
+
 
 .topTenLb {
    display: flex;
@@ -52,7 +58,8 @@
     35px -12px 0 #444,
     40px -14px 0 #444,
     45px -16px 0 #444,
-    50px -18px 0 #444;
+    50px -18px 0 #444,
+    80px -20px 24px hsl(0deg 0% 0% / 0.37);
 }
 
 .lbTitle {

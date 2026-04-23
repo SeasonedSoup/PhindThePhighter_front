@@ -74,35 +74,21 @@ export default function Gameplay() {
                 <div className='square' style={{ left: pos.x * rect.width + 'px', top: pos.y * rect.height + 'px'}} ></div>
               </div>
             </div>
-
-            <div className='dropdownMenu'>
-              <h1>PHIND THESE PHIGHTERS!</h1>
-              <div className='characters'>
-                <div className='characterCard'>
-                  <img src={phighters[0].img} alt="coil" />
-                  <h3>{phighterStatus[1]}</h3>
-                  <div className='choices'>                    
-                    <img className="confirm" src={confirm} alt="confirm" onClick={() => validateAnswer('Coil', 1)}/>
-                    <h2>{phighters[0].name}</h2>
-                  </div>
-                </div>
-                
-                 <div className='characterCard'>
-                  <img src={phighters[1].img} alt="medkit" />
-                  <h3>{phighterStatus[2]}</h3>
-                  <div className='choices'>
-                    <img className="confirm" src={confirm} alt="confirm" onClick={() => validateAnswer('Medkit', 2)}/>
-                    <h2>{phighters[1].name}</h2>
-                  </div>
-                </div>
-
-                 <div className='characterCard'>
-                  <img src={phighters[2].img} alt="sword" />
-                  <h3>{phighterStatus[3]}</h3>
-                  <div className='choices'>
-                    <img className="confirm" src={confirm} alt="confirm" onClick={() => validateAnswer('Sword', 3)}/>
-                    <h2>{phighters[2].name}</h2>
-                  </div>
+            <div className="sidebar">
+              <h1 className="instructionTitle">PHIND THESE PHIGHTERS!</h1>
+              <div className='dropDownMenu'>
+                <div className='characters'>
+                  {phighters.map((phighter, i) => {
+                    return (
+                      <div className='characterCard'>
+                        <h2 className="phighterName">{phighter.name}</h2>
+                        <img src={phighter.img} alt="coil" />
+                        <h3 className="status"> {phighterStatus[i]}</h3>
+                        <div className='choices'>                    
+                          <img className="confirm" src={confirm} alt="confirm" onClick={() => validateAnswer('Coil', 1)}/>
+                        </div>
+                    </div>
+                    )})}
                 </div>
               </div>
             </div>
