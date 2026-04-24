@@ -64,6 +64,7 @@ export default function Gameplay() {
 
       navigate(`/maps`)
     }
+    
   
     return (
           <div className='screen'>
@@ -74,7 +75,7 @@ export default function Gameplay() {
               </div>
             </div> }
             {paused === true &&
-              <div className='modal'>
+              <div className='modal exit'>
                 <div className='modal-content'>
                   <h3>Game Paused</h3>
                   <h3>Current Time : {formatTime(timer)}</h3>
@@ -83,7 +84,7 @@ export default function Gameplay() {
                 </div>
               </div>
             }
-            { winCondition === true && <ScoreForm score={timer} mapId={getIdByMapName(mapName)}/> }
+            { winCondition === true && <ScoreForm score={timer} mapId={getIdByMapName(mapName)} mapName={mapName}p/> }
             <div className='stats'>
               <img className="menuBtn" src={pauseIcon} alt="menu" onClick={() => setPaused(true)} />
             </div>
@@ -111,7 +112,7 @@ export default function Gameplay() {
                         <h3 className="status"> {phighterStatus[i + 1]}</h3>
                         <button className="findBtn" onClick={() => validateAnswer(phighter.name, i + 1)}>Find</button>
                         <div className='choices'>                    
-                          {phighterStatus[i + 1] === 'Found' ? <img className="confirm" src={found} alt="check Icon" /> : <img className="confirm" src={notFound} alt="X Icon"/> }
+                          {phighterStatus[i + 1] === 'Found' ? <img className="check"  key="found" src={found} alt="check Icon" /> : <img className="wrong"  key="notFound" src={notFound} alt="X Icon"/> }
                         </div>
                     </div>
                     )})}

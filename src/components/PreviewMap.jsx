@@ -1,20 +1,20 @@
 import getUrl from '../utils/getUrl'
 import { useEffect, useState } from 'react';
-import {useLocation, useNavigate, useParams} from 'react-router';
+import { useNavigate, useParams} from 'react-router';
 import { formatTime } from '../utils/formatTimer';
-import {getMap} from '../utils/getMap';
+import {getMap, getIdByMapName} from '../utils/getMap';
 
 import "@/styles/previewMap.css"
 function PreviewMap() {
     const [topPlayers, setTopPlayers] = useState([]);
     const navigate = useNavigate();
     const {mapName} = useParams();
-    const location = useLocation();
+    const mapId = getIdByMapName(mapName);
     
     useEffect(() => {
          async function fetchTopTenPlayers() {
-            console.log(location.state.id)
-            const response = await fetch(getUrl() + `/${location.state.id}/mapInfo`, {
+            console.log(mapId)
+            const response = await fetch(getUrl() + `/${mapId}/mapInfo`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'
@@ -32,10 +32,14 @@ function PreviewMap() {
         }
 
         fetchTopTenPlayers();
-    }, [location.state.id])
+    }, [mapId])
 
     function startGame() {
         navigate(`/game/${mapName}`);
+    }
+
+    function visitLeaderboard() {
+        navigate(`/leaderboard/${mapName}`);
     }
 
     
@@ -45,7 +49,7 @@ function PreviewMap() {
                 <div className='mapTitle'>
                     <h1>{mapName.split("-").join(" ")}</h1>
                 </div>
-                <img src={getMap(location.state.id)}/>
+                <img src={getMap(mapId)}/>
                 <button className='playBtn' onClick={startGame}>Play Map</button>
             </div>
 
@@ -66,12 +70,12 @@ function PreviewMap() {
                             </div>
                             );
                         })}
-                        <button className='visitLbBtn'>Visit Leaderboard</button>
+                        <button className='visitLbBtn'onClick={visitLeaderboard}> Visit Leaderboard </button>
                     </div>
                     
                     ) : ( <div className='lbBackground'>
                             <h1 className='emptyLb'>There are currently no top 10 players. Be the first!</h1>
-                            <button className='visitLbBtn'>Visit Leaderboard</button>
+                            <button className='visitLbBtn' onClick={visitLeaderboard} >Visit Leaderboard</button>
                         </div>)
                     }
             </div>

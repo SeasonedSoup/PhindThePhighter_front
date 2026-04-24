@@ -5,11 +5,13 @@ import App from './App.jsx'
 
 import {RouterProvider, createBrowserRouter } from 'react-router'
 
-import { Intro } from './components/Intro.jsx'
+import { Intro } from './components/Intro.jsx';
 import TitleScreen from '@/components/TitleScreen.jsx';
-import ChooseMap from '@/components/chooseMap.jsx'
-import Gameplay from '@/components/Gameplay.jsx'
-import PreviewMap from './components/PreviewMap.jsx'
+import ChooseMap from '@/components/chooseMap.jsx';
+import Gameplay from '@/components/Gameplay.jsx';
+import PreviewMap from './components/PreviewMap.jsx';
+import { Leaderboard } from './components/Leaderboard.jsx';
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -28,8 +30,15 @@ const router = createBrowserRouter([
     element: <PreviewMap/>
   },
   {
+    path: "/leaderboard/:mapName",
+    element: <Leaderboard/>
+  },
+  {
     path: "/game/:mapName",
     element: <Gameplay/>
+  },
+  {
+    path: "/artworks" 
   }
 ])
 

@@ -7,8 +7,8 @@ import { useNavigate } from "react-router";
 function ChooseMap() {
     const navigate = useNavigate()
 
-    function viewMapInfo(mapName, mapId) {
-        navigate(`/mapInfo/${mapName}`, { state: { id: mapId } });
+    function viewMapInfo(mapName) {
+        navigate(`/mapInfo/${mapName}`);
     }
 
     function navigateToTitle() {
@@ -21,17 +21,17 @@ function ChooseMap() {
             <h1 className="heroText">Choose A Map</h1>
 
             <div className="images">
-                <div className="mapChoice" id="one"onClick={() => viewMapInfo("Bogio-Skatepark", 1)}>
+                <div className="mapChoice" id="one"onClick={() => viewMapInfo("Bogio-Skatepark")}>
                         <img src={Skatepark} alt="skatepark" />
                         <h3 className="mapName">Bogio Skatepark</h3>
                 </div>
                 
-                <div className="mapChoice" id="two" onClick={() => viewMapInfo("Roblox-Museum", 2)}>
+                <div className="mapChoice" id="two" onClick={() => viewMapInfo("Roblox-Museum")}>
                     <img src={Museum} alt="museum" />
                     <h3 className="mapName" >Roblox Museum</h3>
                 </div>
 
-                <div className="mapChoice" id="three" onClick={() => viewMapInfo("Craterdust-Capital", 3)}>
+                <div className="mapChoice" id="three" onClick={() => viewMapInfo("Craterdust-Capital")}>
                     <img src={CraterDust} alt="a crazy city" />
                     <h3 className="mapName">Craterdust Capital</h3>
                 </div>

@@ -4,7 +4,7 @@ import '@/styles/ScoreForm.css'
 import {useNavigate} from 'react-router'
 import { useState } from "react";
 
-export default function ScoreForm({score, mapId}) {
+export default function ScoreForm({score, mapId, mapName}) {
     const navigate = useNavigate();
     const [submitting, setSubmitting] = useState(false);
     async function createHighScore(name) {
@@ -45,6 +45,7 @@ export default function ScoreForm({score, mapId}) {
     return (
         <div className="scoreForm">
             <form action="/create" className="scoreFormContent" onSubmit={submitScore}>
+            <h4>Nice! You beat {mapName}</h4>
             <label htmlFor="name">What's your name?</label>
             <input type="text" id="name" name="name"/>
             <h2>Time taken: {formatTime(score)}</h2>
