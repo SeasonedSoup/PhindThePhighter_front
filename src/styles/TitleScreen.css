@@ -7,7 +7,8 @@
     height: 100vh;
     background: url('../assets/icons/crossroads2.png') no-repeat center / cover;
     background-color: rgb(98, 207, 250);
-  }
+    overflow-x: clip;
+}
 
 .btns {
   display: flex;
@@ -16,6 +17,15 @@
   margin-right: 40%;
   margin-top: 25%;
   gap: 6em;
+}
+
+.btns.getOutLeft {
+  animation: getoutLeft 1s ease-in-out forwards;
+}
+
+
+.btns.goBackLeft {
+  animation: goBackLeft 1s ease-in-out forwards;
 }
 
 .titleBtn {
@@ -66,6 +76,15 @@
   justify-content: center;
   align-items: center;
 }
+
+.titleContainer.getOutRight {
+  animation: getoutRight 1s ease-in-out forwards;
+}
+
+.titleContainer.goBackRight {
+  animation: goBackRight 1s ease-in-out forwards;
+}
+
 .title {
   font-family: "Knewave", system-ui;
   font-weight: 400;
@@ -100,4 +119,132 @@ audio {
     -3px -2px 0 #000,
     8px  2px 0 #000,
     -2px  2px 0 #000;
+}
+
+/* Credits styles */
+.credits {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  
+  text-align: justify;
+  color: white;
+
+  display: flex;
+  flex-direction: column;
+  gap: 2em;
+}
+
+.section {
+  text-shadow: 
+    -6px 2px 0 #000,  
+     2px 2px 0 #000,
+    -4px  2px 0 #000,
+     2px  2px 0 #000;
+}
+
+.theme {
+  color: #b8cf32
+}
+
+a {
+  text-decoration: none;
+  color: rgb(172, 172, 172);
+  cursor: pointer;
+  pointer-events: all;
+   font-size: 1rem;
+}
+
+a:hover {
+  text-decoration: underline;
+  color: rgb(255, 255, 255);
+}
+
+.exitCredits {
+  position: absolute;
+  top: 5%;
+  right: 95%;
+}
+
+.creditContainer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transform: translateY(100vh);
+  pointer-events: none;
+}
+
+.creditContainer.show {
+  animation: slideUp 3s ease-out forwards;
+}
+
+.creditContainer.exit {
+  animation: slideDown 0.4s ease-in forwards;
+}
+
+
+/* keyframes */
+
+@keyframes getoutLeft {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  } to {
+    opacity: 0;
+    transform: translateX(-50vw);
+  }
+}
+
+@keyframes goBackLeft {
+  from { 
+    opacity: 0; 
+    transform: translateX(-50vw); 
+  }
+  to { 
+    opacity: 1; transform: translateX(0); 
+  }
+}
+
+@keyframes getoutRight {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  } to {
+    opacity: 0;
+    transform: translateX(50vw);
+  }
+}
+
+@keyframes goBackRight {
+  from { 
+    opacity: 0; 
+    transform: translateX(50vw); 
+  }
+  to { 
+    opacity: 1; transform: translateX(0); 
+  }
+}
+
+
+@keyframes slideUp {
+  from {
+    transform: translateY(100vh);
+  }
+  to {
+    transform: translateY(0);
+
+  }
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(100vh);
+
+  }
 }
