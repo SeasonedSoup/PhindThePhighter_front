@@ -11,6 +11,7 @@ import ChooseMap from '@/components/chooseMap.jsx';
 import Gameplay from '@/components/Gameplay.jsx';
 import PreviewMap from './components/PreviewMap.jsx';
 import { Leaderboard } from './components/Leaderboard.jsx';
+import Artworks from './components/Artworks.jsx'
 
 const router = createBrowserRouter([
   {
@@ -38,7 +39,8 @@ const router = createBrowserRouter([
     element: <Gameplay/>
   },
   {
-    path: "/artworks" 
+    path: "/artworks", 
+    element: <Artworks/>
   }
 ])
 

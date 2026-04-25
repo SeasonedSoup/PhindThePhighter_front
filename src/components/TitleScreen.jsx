@@ -8,12 +8,16 @@ function TitleScreen() {
         navigate('/maps')
     }
 
+    function navigateToArtworks() {
+        navigate('/artworks')
+    }
+
     return (
         <div className="container">
             <div className="btns">
                 <button className="titleBtn" onClick={navigateToMapChoices}>Choose Map</button>
-                <button className="titleBtn">Credits</button>
-                <button className="titleBtn">Artworks</button>
+                <button className="titleBtn" >Credits</button>
+                <button className="titleBtn" onClick={navigateToArtworks}>Artworks</button>
             </div>
             <div className="titleContainer">
                 <h1 className="title"> Phind The <br/> Phighter!</h1>

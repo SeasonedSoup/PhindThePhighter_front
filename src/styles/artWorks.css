@@ -1,0 +1,72 @@
+.artWorkScreen {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: aquamarine;
+    position: relative;
+    z-index: -9;
+}
+
+.artWorkImages {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10em;
+}
+
+.imageContainer {
+    height: 400px;
+    width: 400px;
+    max-height: 400px;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+.artWorkImg {
+    border-radius: 50%;
+    border: solid 3px black;
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
+
+
+.skate {
+ box-shadow: -100px 0 0 10px rgb(0, 0, 0);
+ transition: box-shadow 0.3s ease-in-out;
+}
+
+.skate:hover {
+    box-shadow: 0 0 0 10px rgba(255, 0, 0, 1);
+}
+
+.sling {
+ box-shadow:  -100px  0 0 10px rgb(0, 97, 97);
+  transition: box-shadow 0.3s ease-in-out;
+}
+
+.sling:hover {
+    box-shadow: 0 0 0 10px cyan;
+}
+
+.coil {
+ box-shadow:  -100px  0 0 10px orangered;
+transition: box-shadow 0.3s ease-in-out;
+}
+
+.coil:hover {
+    box-shadow: 0 0 0 10px purple;
+}
+
+.btn {
+    border-style: none;
+    background-color: white;
+    cursor: pointer;
+}

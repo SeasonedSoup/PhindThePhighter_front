@@ -32,7 +32,7 @@
   display: inline-block;
   transform: scale(2);
   border: 2px solid black;
-
+  transition: transform 0.1s ease-in;
   box-shadow:
     -8px -2px 0 #000,  
      2px -2px 0 #000,
