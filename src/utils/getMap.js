@@ -59,7 +59,7 @@ import Rocket from "../assets/characters/Render_Rocket.png"
 const mapPhighters = {
     "Bogio-Skatepark" : {"phighters" : [{"name": "Coil", "img": Coil}, {"name" : "Medkit", "img": Medkit} , {"name": "Sword", "img": Sword}]},
     "Roblox-Museum" : {"phighters" : [{"name" :"Katana", "img": Katana}, {"name": "Biograft", "img": Biograft }, {"name":"Shuriken", "img": Shuriken}, {"name": "Vinestaff", "img": Vinestaff}]},
-    "Craterdust-Capital" : {"phighters" : [{"name":"Skateboard", "img": Skateboard}, {"name":"BanHammer", "img": BanHammer} , {"name": "Subspace", "img": Subspace}
+    "Craterdust-Capital" : {"phighters" : [{"name":"Skateboard", "img": Skateboard}, {"name":"Banhammer", "img": BanHammer} , {"name": "Subspace", "img": Subspace}
         , {"name": "Valk", "img": Valk}, {"name": "Rocket", "img": Rocket}
     ]}
 }

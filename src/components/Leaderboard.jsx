@@ -1,13 +1,16 @@
 import { useEffect, useState } from "react";
 
 import getUrl from "../utils/getUrl";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { getIdByMapName } from "../utils/getMap";
 import { formatTime } from "../utils/formatTimer";
+
+import '@/styles/Leaderboard.css'
 export  function Leaderboard() {
     const [users, setUsers] = useState([]);
     const {mapName} = useParams();
     const mapId = getIdByMapName(mapName);
+    const navigate = useNavigate();
     console.log(mapId)
     useEffect(() => {
         async function fetchAll() {
@@ -31,15 +34,22 @@ export  function Leaderboard() {
     fetchAll();
     }, [mapId])
 
+    function navigateBack() {
+        navigate(`/mapInfo/${mapName}`)
+    }
+
     return (
-        <div>
+        <div className="lbScreen">
+            <button onClick={navigateBack}>Go back</button>
             <h1>{mapName.split("-").join(" ")} LEADERBOARD:</h1>
 
-            {
-                users.length > 0 ? users.map((user) => {
-                    return <h1 key="user.name">{user.name}, {formatTime(user.timeTakenMs)}</h1>
+                <div className="">
+                {
+                     users.length > 0 ? users.map((user, i) => {
+                    return <h1 key="user.name">{i+1}. {user.name}, {formatTime(user.timeTakenMs)}</h1>
                 }) : <h1>Currently No One in the Leaderboard Be The first!</h1>
-            }
+                }
+                </div>
         </div>
     )
 }

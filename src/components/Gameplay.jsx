@@ -19,19 +19,21 @@ export default function Gameplay() {
     //navigation
     const navigate = useNavigate();
 
+    //to be used for rendering proper map and chars
+    const {mapName} = useParams();  
+    const currentMap = getMapImgByName(mapName)
+    const {phighters} = getPhightersByMapName(mapName)
+
     //checks if all phighters are found or not found then timer will adjust accordingly
-    const {phighterStatus, resetPhighterStatus, changePhighterStatus} = usePhighterStatus();
+    const {phighterStatus, resetPhighterStatus, changePhighterStatus} = usePhighterStatus(phighters.length);
     const winCondition = Object.values(phighterStatus).every((status) => status === 'Found');
+    console.log(winCondition);
     const {countdown, timer, resetTimer} = useGameplayTimer(winCondition, paused);
 
     //for the square to know where the map is located
     const mapRef = useRef(null);
     const {pos, rect} = useTrackerSquare(mapRef);
 
-    //to be used for rendering proper map and chars
-    const {mapName} = useParams();  
-    const currentMap = getMapImgByName(mapName)
-    const {phighters} = getPhightersByMapName(mapName)
     
     //Check if map changed
     useEffect(() => {
@@ -90,7 +92,7 @@ export default function Gameplay() {
             </div>
             <div className='gameScreen'>
               <div className='map' ref={mapRef}>
-                <img src={currentMap} alt="selected map" />
+                <img draggable="false" src={currentMap} alt="selected map" />
                 <div className='square' style={{ left: pos.x * rect.width + 'px', top: pos.y * rect.height + 'px'}} ></div>
               </div>
               <h1 className="timer"> {formatTime(timer)} </h1>
@@ -109,10 +111,10 @@ export default function Gameplay() {
                       <div className='characterCard' key={phighter.name}>
                         <h2 className="phighterName">{phighter.name}</h2>
                         <img src={phighter.img} alt="coil" />
-                        <h3 className="status"> {phighterStatus[i + 1]}</h3>
-                        <button className="findBtn" onClick={() => validateAnswer(phighter.name, i + 1)}>Find</button>
+                        <h3 className="status"> {phighterStatus[i]}</h3>
+                        <button className="findBtn" onClick={() => validateAnswer(phighter.name, i)}>Find</button>
                         <div className='choices'>                    
-                          {phighterStatus[i + 1] === 'Found' ? <img className="check"  key="found" src={found} alt="check Icon" /> : <img className="wrong"  key="notFound" src={notFound} alt="X Icon"/> }
+                          {phighterStatus[i] === 'Found' ? <img className="check"  key="found" src={found} alt="check Icon" /> : <img className="wrong"  key="notFound" src={notFound} alt="X Icon"/> }
                         </div>
                     </div>
                     )})}

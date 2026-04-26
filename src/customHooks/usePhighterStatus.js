@@ -1,9 +1,12 @@
 import { useState } from "react"
 
-export function usePhighterStatus() {
+export function usePhighterStatus(phightersLength) {
     //Status of phighters when gameplay starts
-    const initialStatus = {1: 'Not Found', 2: "Not Found", 3: "Not Found"};
-
+    const initialStatus = {};
+    for (let i = 0; i < phightersLength ; i++) {
+        initialStatus[i] = "Not Found"
+    }
+    
     const [phighterStatus, setPhighterStatus] = useState (
     sessionStorage.getItem("phighterStatusSession") ? JSON.parse(sessionStorage.getItem("phighterStatusSession")) : initialStatus
     );
