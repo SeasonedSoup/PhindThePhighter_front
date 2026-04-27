@@ -56,7 +56,7 @@ function TitleScreen() {
                 <h1 className="title"> Phind The <br/> Phighter!</h1>
                 <div className="soundTrack">
                     <h3>"PHIGHT!" by: CRABLOOSHI</h3>
-                    <audio controls autoPlay loop muted>
+                    <audio controls autoPlay loop>
                     <source src={ost} type="audio/mpeg"/>
                     </audio>
                 </div>
