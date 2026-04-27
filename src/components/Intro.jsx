@@ -4,15 +4,13 @@ export function Intro() {
     const navigate = useNavigate();
 
     function handleStart() {
-        // Add the animation class
         document.documentElement.classList.add('intro-to-title');
 
-        // Trigger the transition
+        
         const transition = document.startViewTransition(() => {
-            navigate('/title'); // Or wherever your TitleScreen route is
+            navigate('/title'); 
         });
 
-        // Clean up
         transition.finished.finally(() => {
             document.documentElement.classList.remove('intro-to-title');
         });
