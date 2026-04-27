@@ -7,12 +7,12 @@ export function useGameplayTimer(winCondition, paused) {
     
     const resetTimer = () => {
         sessionStorage.removeItem("seconds");
-        sessionStorage.removeItem("cdFinished");
+        sessionStorage.setItem("cdFinished", false);
         setCountdown(initialCountdown);
         setTimer(0);
     };
     
-
+    
     useEffect(() => {
         if (countdown <= 0) return;
     

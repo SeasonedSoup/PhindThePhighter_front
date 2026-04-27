@@ -65,10 +65,10 @@ function TitleScreen() {
                  <Credits></Credits>
             </div>
             
-            <audio id="myAudio" hidden="true" ref={audioHoverRef}>
+            <audio id="myAudio"  ref={audioHoverRef}>
                 <source src={hoverSound} type="audio/ogg"/>
             </audio>
-             <audio id="myAudio" hidden="true" ref={audioClickRef}>
+             <audio id="myAudio"  ref={audioClickRef}>
                 <source src={clickSound} type="audio/ogg"/>
             </audio>
           

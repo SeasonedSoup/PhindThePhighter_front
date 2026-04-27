@@ -1,7 +1,7 @@
 import "@/styles/Gameplay.css";
 
 import { useEffect, useRef, useState } from 'react';
-import { useNavigate, useParams } from "react-router";
+import { useNavigate, useParams} from "react-router";
 
 import { formatTime } from '@/utils/formatTimer';
 import { getMapImgByName, getIdByMapName, getPhightersByMapName } from "@/utils/getMap";
@@ -9,6 +9,8 @@ import getUrl from '@/utils/getUrl';
 import { useGameplayTimer } from "../customHooks/useGameplayTimer";
 import { usePhighterStatus } from "../customHooks/usePhighterStatus";
 import { useTrackerSquare } from "../customHooks/useTrackerSquare";
+import { useToken } from "../customHooks/useToken";
+import { resetSession } from "../utils/sessionHandler";
 import ScoreForm from './ScoreForm';
 
 import pauseIcon from "@/assets/icons/pause-button.png";
@@ -27,47 +29,87 @@ export default function Gameplay() {
     //checks if all phighters are found or not found then timer will adjust accordingly
     const {phighterStatus, resetPhighterStatus, changePhighterStatus} = usePhighterStatus(phighters.length);
     const winCondition = Object.values(phighterStatus).every((status) => status === 'Found');
-    console.log(winCondition);
     const {countdown, timer, resetTimer} = useGameplayTimer(winCondition, paused);
 
     //for the square to know where the map is located
     const mapRef = useRef(null);
     const {pos, rect} = useTrackerSquare(mapRef);
 
+    //token 
+    const { token, setToken } = useToken(getIdByMapName(mapName));
     
+    
+    //get server score when game ends
+    const [serverScore, setServerScore] = useState(() => {
+      return sessionStorage.getItem("serverScore") || null;
+    });
+    const runRef = useRef(false)
+    useEffect(() => {
+  if (!winCondition || runRef.current || !token) return;
+
+  if (runRef.current) return;
+  runRef.current = true;
+
+  const setEnd = async () => {
+    try {
+      const response = await fetch(getUrl() + '/gameEnd', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          }
+    });
+
+        const result = await response.json();
+
+        setToken(result.token);
+        sessionStorage.setItem("serverScore", result.score);
+        setServerScore(result.score);
+
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    setEnd();
+  }, [winCondition, token, setToken]);
+      
+    
+
     //Check if map changed
     useEffect(() => {
       const lastMap = sessionStorage.getItem("prevMap")
 
       if (lastMap !== mapName) {
           resetTimer();
+          resetSession();
           resetPhighterStatus();
       }
       sessionStorage.setItem("prevMap", mapName)
 
-    }, [mapName, resetTimer, resetPhighterStatus]);
+    }, [mapName, resetTimer, resetPhighterStatus, setToken]);
 
     
     async function validateAnswer(character, index) {
-      console.log('clicking')
       const response = await fetch(getUrl(), {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
         },
         body: JSON.stringify({character: character, coordinates: pos})
       })
     const result = await response.json()
-    console.log(result)
+      setToken(result.token)
       changePhighterStatus(result, index)  
     }
 
     function navigateToMaps() {
-
+      resetSession();
       navigate(`/maps`)
     }
-    
   
+
     return (
           <div className='screen'>
             {countdown > 0 && 
@@ -86,7 +128,7 @@ export default function Gameplay() {
                 </div>
               </div>
             }
-            { winCondition === true && <ScoreForm score={timer} mapId={getIdByMapName(mapName)} mapName={mapName}p/> }
+            { winCondition === true && <ScoreForm score={timer} serverScore={serverScore} mapId={getIdByMapName(mapName)} mapName={mapName} token={token} setToken={setToken}/> }
             <div className='stats'>
               <img className="menuBtn" src={pauseIcon} alt="menu" onClick={() => setPaused(true)} />
             </div>

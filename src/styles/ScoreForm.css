@@ -25,6 +25,19 @@
    border: solid 8px rgb(163, 154, 154);
 }
 
+.timers {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  gap: 20px
+}
+
+.button {
+  margin-top: 2em;
+  scale: 1.2;
+}
 /* Animation frames */
 
 @keyframes popUp {

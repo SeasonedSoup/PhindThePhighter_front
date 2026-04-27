@@ -3,8 +3,9 @@ import getUrl from "@/utils/getUrl"
 import '@/styles/ScoreForm.css'
 import {useNavigate} from 'react-router'
 import { useState } from "react";
+import { resetSession } from "../utils/sessionHandler";
 
-export default function ScoreForm({score, mapId, mapName}) {
+export default function ScoreForm({score, serverScore, mapId, mapName, token, setToken}) {
     const navigate = useNavigate();
     const [submitting, setSubmitting] = useState(false);
     async function createHighScore(name) {
@@ -12,22 +13,23 @@ export default function ScoreForm({score, mapId, mapName}) {
             const response = await fetch(getUrl() + '/create', {
                 method: 'POST',
                 headers: {
-                'Content-type': 'application/json'
+                'Content-type': 'application/json',
+                'Authorization': `Bearer ${token}`
                 },
-                body: JSON.stringify({name: name, score: score, mapId: mapId})
+                body: JSON.stringify({name: name, mapId: mapId})
             }) 
 
             if (response.ok) {
                 const result = await response.json();
                 console.log("Success:", result.message);
                 setSubmitting(false);
-                sessionStorage.setItem("seconds", 0)
-                sessionStorage.removeItem("phighterStatusSession")
+                resetSession(setToken);
                 navigate('/');
                 } 
         } catch (err) {
             console.error("Try again. Submission failed:", err);
         } finally {
+            resetSession(setToken) 
             setSubmitting(false);
         }
     }
@@ -48,8 +50,12 @@ export default function ScoreForm({score, mapId, mapName}) {
             <h4>Nice! You beat {mapName}</h4>
             <label htmlFor="name">What's your name?</label>
             <input type="text" id="name" name="name"/>
-            <h2>Time taken: {formatTime(score)}</h2>
-            <button disabled={submitting}>
+            <div className="timers">
+                <h2>Time taken (Client): {formatTime(score)}</h2>
+                <h2>Time taken (Server): {formatTime(serverScore)}</h2>
+            </div>
+            
+            <button className="button" disabled={submitting}>
                 Enter
             </button>
             </form>
