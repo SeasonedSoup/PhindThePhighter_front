@@ -11,6 +11,7 @@ import { usePhighterStatus } from "../customHooks/usePhighterStatus";
 import { useTrackerSquare } from "../customHooks/useTrackerSquare";
 import { useToken } from "../customHooks/useToken";
 import { resetSession } from "../utils/sessionHandler";
+import giveRandomMusic from "../utils/AudioPlayerRandom";
 import ScoreForm from './ScoreForm';
 
 import pauseIcon from "@/assets/icons/pause-button.png";
@@ -18,6 +19,7 @@ import pauseIcon from "@/assets/icons/pause-button.png";
 export default function Gameplay() {
     //pauseState 
     const [paused, setPaused] = useState(false)
+    const [track, setTrack] = useState("");
     //navigation
     const navigate = useNavigate();
 
@@ -40,7 +42,43 @@ export default function Gameplay() {
 
     //token 
     const { token, setToken } = useToken(mapId);
-    
+
+    //music 
+    const audioRef = useRef(null);
+    useEffect(() => {
+      const audio = audioRef.current;
+      if (audio) {
+        const track = giveRandomMusic();
+        audio.src = track.music;
+        setTrack(track.name);
+        const timer = setTimeout(() => {
+          audio.volume = 0.5
+          audio.play();
+        }, 3000);
+        
+        return () => {
+          clearTimeout(timer);
+          audio.pause();
+          audio.currentTime = 0;
+        };
+      }
+    }, []);
+
+    useEffect(() => {
+      const audio = audioRef.current;
+      if (!audio) return;
+      
+      if (paused) {
+        audio.pause();
+      } else {
+        const timer = setTimeout(() => {
+          audio.volume = 0.5
+          audio.play();
+        }, 3000);
+        
+        return () => clearTimeout(timer);
+      }
+    }, [paused]);
     
     //get server score when game ends
     const [serverScore, setServerScore] = useState(() => {
@@ -144,6 +182,11 @@ export default function Gameplay() {
               <img className="menuBtn" src={pauseIcon} alt="menu" onClick={() => setPaused(true)} />
             </div>
             <div className='gameScreen'>
+              <div className="gameplayAudio">
+                <h2>{track}</h2>
+                <audio ref={audioRef} loop controls></audio>
+              </div>
+        
               <div className='map' ref={mapRef}>
                 <img draggable="false" src={currentMap} alt="selected map" />
                 <div className='square' style={{ left: pos.x * rect.width + 'px', top: pos.y * rect.height + 'px'}} ></div>

@@ -90,3 +90,9 @@ img {
     height: auto;
     border-radius: 12px;
 }
+
+.lobbyMusic {
+    position: absolute;
+    right:3%;
+    top: 90%;
+}

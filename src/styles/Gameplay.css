@@ -46,6 +46,15 @@
 }
 
 /* Gameplay Section */
+
+.gameplayAudio {
+  position: absolute;
+  top: 93%;
+  left: 1%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 .gameScreen {
   display: flex;
   flex-direction: column;

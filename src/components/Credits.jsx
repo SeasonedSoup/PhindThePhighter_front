@@ -14,7 +14,7 @@ export function Credits() {
             </div>
              <div className="section">
                 <h1 className="theme">Music</h1>
-                <h2>Made by CRABLOOSHI!</h2>
+                <h2>Musics Made by CRABLOOSHI!, CyberVortex, and Key after Key.</h2>
             </div>
             <div className="section">
                 <h1 className="theme">Map Images </h1>

@@ -1,6 +1,6 @@
 import "@/styles/TitleScreen.css"
 import { useNavigate } from "react-router";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import ost from '../assets/betterCrablooshi.mp3'
 import hoverSound from "../assets/hoverSound.ogg"
 import clickSound from "../assets/clickSound.ogg"
@@ -10,6 +10,22 @@ function TitleScreen() {
     const navigate = useNavigate();
     const audioHoverRef = useRef(null);
     const audioClickRef = useRef(null);
+    const bgRef = useRef(null);
+
+    useEffect(() => {
+        const audio = bgRef.current;
+
+        const savedTime = sessionStorage.getItem("audio-time")
+
+        if (savedTime) audio.currentTime = parseFloat(savedTime) 
+            
+        const saveTime = () => {
+            sessionStorage.setItem('audio-time', audio.currentTime);
+        }
+        audio.addEventListener("timeupdate", saveTime)
+
+        return () => audio.removeEventListener("timeupdate", saveTime)
+    }, [])
     const [hasInteracted, setHasInteracted] = useState(false); 
 
     const [viewCredits, setViewCredits] = useState(false)
@@ -22,7 +38,7 @@ function TitleScreen() {
     }
 
     function showCredits() {
-    setHasInteracted(true); // Now we know the user clicked
+    setHasInteracted(true); 
     setViewCredits(true);
     }
 
@@ -32,14 +48,14 @@ function TitleScreen() {
 
     function hoverPlay() {
         if (audioHoverRef.current) {
-            audioHoverRef.current.currentTime = 0; // Rewind to start
+            audioHoverRef.current.currentTime = 0; 
             audioHoverRef.current.play();
         }
     }
 
     function clickPlay() {
     if (audioClickRef.current) {
-            audioClickRef.current.currentTime = 0; // Rewind to start
+            audioClickRef.current.currentTime = 0; 
             audioClickRef.current.play();
         }
     }
@@ -56,7 +72,7 @@ function TitleScreen() {
                 <h1 className="title"> Phind The <br/> Phighter!</h1>
                 <div className="soundTrack">
                     <h3>"PHIGHT!" by: CRABLOOSHI</h3>
-                    <audio controls autoPlay loop>
+                    <audio controls autoPlay loop ref={bgRef}>
                     <source src={ost} type="audio/mpeg"/>
                     </audio>
                 </div>
