@@ -57,7 +57,7 @@ function PreviewMap() {
             </div>
 
             <div className='topTenLb'>
-                {loading === true ? <h1>Loading ...</h1> 
+                {loading === true ? <div className='emptyLb'><h1>Loading ...</h1> </div>
                     :   topPlayers.length > 0 ? (
                         <div className='lbBackground'>
                         <h1 className='lbTitle'>Top 10 Leaderboard</h1>
