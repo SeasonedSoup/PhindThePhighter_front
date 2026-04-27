@@ -8,6 +8,7 @@ import { formatTime } from "../utils/formatTimer";
 import '@/styles/Leaderboard.css'
 export  function Leaderboard() {
     const [users, setUsers] = useState([]);
+    const [loading, setLoading] = useState(true);
     const {mapName} = useParams();
     const mapId = getIdByMapName(mapName);
     const navigate = useNavigate();
@@ -24,11 +25,13 @@ export  function Leaderboard() {
             if (!response.ok) {
                 const error = await response.json()
                 console.error(error);
+                setLoading(false)
             }
         
         const result = await response.json()
                 console.log(result);
                 setUsers(result);
+                setLoading(false)
     }
 
     fetchAll();
@@ -43,8 +46,8 @@ export  function Leaderboard() {
             <button onClick={navigateBack}>Go back</button>
             <h1>{mapName.split("-").join(" ")} LEADERBOARD:</h1>
 
-                <div className="">
-                {
+                <div>
+                { loading === true ? <h1>Loading ...</h1> :
                      users.length > 0 ? users.map((user, i) => {
                     return <h1 key="user.name">{i+1}. {user.name}, {formatTime(user.timeTakenMs)}</h1>
                 }) : <h1>Currently No One in the Leaderboard Be The first!</h1>

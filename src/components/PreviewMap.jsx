@@ -7,6 +7,7 @@ import {getMap, getIdByMapName} from '../utils/getMap';
 import "@/styles/previewMap.css"
 function PreviewMap() {
     const [topPlayers, setTopPlayers] = useState([]);
+    const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
     const {mapName} = useParams();
     const mapId = getIdByMapName(mapName);
@@ -23,12 +24,14 @@ function PreviewMap() {
 
             if (!response.ok) {
                 const error = await response.json()
+                setLoading(false)
                 console.error(error);
             }
 
             const result = await response.json()
             console.log(result);
             setTopPlayers(result)
+            setLoading(false)
         }
 
         fetchTopTenPlayers();
@@ -54,9 +57,9 @@ function PreviewMap() {
             </div>
 
             <div className='topTenLb'>
-               
-                    { topPlayers.length > 0 ? (
-                    <div className='lbBackground'>
+                {loading === true ? <h1>Loading ...</h1> 
+                    :   topPlayers.length > 0 ? (
+                        <div className='lbBackground'>
                         <h1 className='lbTitle'>Top 10 Leaderboard</h1>
                         { topPlayers.map((player, i) => {
                         return (
@@ -77,7 +80,7 @@ function PreviewMap() {
                             <h1 className='emptyLb'>There are currently no top 10 players. Be the first!</h1>
                             <button className='visitLbBtn' onClick={visitLeaderboard} >Visit Leaderboard</button>
                         </div>)
-                    }
+                }
             </div>
         </div>
     )
