@@ -1,3 +1,6 @@
+import dotenv from "dotenv"
+dotenv.config()
+
 export default function getUrl() {
-    return 'http://localhost:8000'
+    return import.meta.env.VITE_API_URL;
 }
