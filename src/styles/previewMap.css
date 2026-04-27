@@ -47,6 +47,7 @@
     flex-direction: column;
     gap: 30px;
     min-height: 1080px;
+    min-width: 586px;
     max-width: 850px;
 
     box-shadow: 
