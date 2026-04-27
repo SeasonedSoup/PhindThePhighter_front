@@ -5,5 +5,6 @@ export function resetSession() {
     sessionStorage.setItem('gameEnded', "false");
     sessionStorage.removeItem('prevMapId');
     sessionStorage.removeItem('token');
+    sessionStorage.removeItem('serverScore');
 }
 

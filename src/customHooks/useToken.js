@@ -17,6 +17,7 @@ export function useToken(mapId) {
         
         const fetchToken = async () => {
             try {
+                console.log("FETCHING GAMESTART")
                 const response = await fetch(getUrl() + '/gameStart', {
                     method: "POST",
                     headers: { 'Content-Type': 'application/json' },

@@ -37,21 +37,27 @@ export default function Gameplay() {
 
     //mapId 
     const mapId = getIdByMapName(mapName)
+
     //token 
     const { token, setToken } = useToken(mapId);
     
     
     //get server score when game ends
     const [serverScore, setServerScore] = useState(() => {
-     sessionStorage.getItem("serverScore") || null;
+      const stored = sessionStorage.getItem("serverScore");
+      return stored !== null ? Number(stored) : null;
     });
 
     useEffect(() => {
-      if (!winCondition || !token) return;
+      if (!winCondition || !token ) return;
+      const prevMapId = Number(sessionStorage.getItem("prevMapId"));
+      const storedScore = sessionStorage.getItem("serverScore");
 
+      if (prevMapId === mapId && storedScore !== null) return;
   
       const setEnd = async () => {
         try {
+          console.log("FETCHING GAME END")
           const response = await fetch(getUrl() + '/gameEnd', {
               method: 'GET',
               headers: {
@@ -67,12 +73,15 @@ export default function Gameplay() {
 
             setServerScore(result.score);
             sessionStorage.setItem("serverScore", result.score);
+             sessionStorage.setItem("prevMapId", mapId);
 
           } catch (err) {
             console.error(err);
           }
         };
+    
     setEnd();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [winCondition]);
       
     
