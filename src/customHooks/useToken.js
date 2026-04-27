@@ -3,16 +3,19 @@ import { useState, useEffect } from 'react';
 
 export function useToken(mapId) {
     const [token, setToken] = useState(() => {
-        return sessionStorage.getItem("token") || null
+        if (Number(sessionStorage.getItem("prevMapId")) !== mapId ) {
+            return null
+        }  else {
+            return sessionStorage.getItem("token")
+        }
     });
-    const [loading, setLoading] = useState(true);
 
 
     useEffect(() => {
-        if (!mapId) return;
+        if (!mapId || token) return;
+
         
         const fetchToken = async () => {
-            setLoading(true);
             try {
                 const response = await fetch(getUrl() + '/gameStart', {
                     method: "POST",
@@ -26,15 +29,15 @@ export function useToken(mapId) {
 
                 const token  = await response.json();
                 setToken(token); 
+                sessionStorage.setItem("prevMapId", mapId)
+                sessionStorage.setItem("token", token);
             } catch (err) {
                 console.error("Token Fetch Error:", err);
-            } finally {
-                setLoading(false);
             }
         };
 
         fetchToken();
     }, [mapId, token]);
 
-    return { token, loading, setToken };
+    return { token, setToken };
 }

@@ -35,44 +35,45 @@ export default function Gameplay() {
     const mapRef = useRef(null);
     const {pos, rect} = useTrackerSquare(mapRef);
 
+    //mapId 
+    const mapId = getIdByMapName(mapName)
     //token 
-    const { token, setToken } = useToken(getIdByMapName(mapName));
+    const { token, setToken } = useToken(mapId);
     
     
     //get server score when game ends
     const [serverScore, setServerScore] = useState(() => {
-      return sessionStorage.getItem("serverScore") || null;
+     sessionStorage.getItem("serverScore") || null;
     });
-    const runRef = useRef(false)
+
     useEffect(() => {
-  if (!winCondition || runRef.current || !token) return;
+      if (!winCondition || !token) return;
 
-  if (runRef.current) return;
-  runRef.current = true;
+  
+      const setEnd = async () => {
+        try {
+          const response = await fetch(getUrl() + '/gameEnd', {
+              method: 'GET',
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+              }
+        });
 
-  const setEnd = async () => {
-    try {
-      const response = await fetch(getUrl() + '/gameEnd', {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
+            const result = await response.json();
+
+            setToken(result.token);
+            sessionStorage.setItem("token", result.token);
+
+            setServerScore(result.score);
+            sessionStorage.setItem("serverScore", result.score);
+
+          } catch (err) {
+            console.error(err);
           }
-    });
-
-        const result = await response.json();
-
-        setToken(result.token);
-        sessionStorage.setItem("serverScore", result.score);
-        setServerScore(result.score);
-
-      } catch (err) {
-        console.error(err);
-      }
-    };
-
+        };
     setEnd();
-  }, [winCondition, token, setToken]);
+  }, [winCondition]);
       
     
 
@@ -101,6 +102,7 @@ export default function Gameplay() {
       })
     const result = await response.json()
       setToken(result.token)
+      sessionStorage.setItem("token", result.token);
       changePhighterStatus(result, index)  
     }
 
