@@ -10,6 +10,8 @@ import mapHover from "@/assets/mapHover.ogg";
 function ChooseMap() {
     const navigate = useNavigate()
     const audioHoverRef = useRef(null);
+    const lobbyMusicRef = useRef(null);
+
     function viewMapInfo(mapName) {
         navigate(`/mapInfo/${mapName}`);
     }
@@ -21,6 +23,11 @@ function ChooseMap() {
     }
     function navigateToTitle() {
         navigate('/')
+    }
+
+    function setAudio() {
+        const audio = lobbyMusicRef.current;
+        audio.volume = 0.05;
     }
 
     return (
@@ -44,9 +51,9 @@ function ChooseMap() {
                     <h3 className="mapName">Craterdust Capital</h3>
                 </div>
             </div>
-            <audio className="lobbyMusic"src={lobbyMusic} autoPlay loop controls ></audio>
+            <audio className="lobbyMusic"src={lobbyMusic} ref={lobbyMusicRef} autoPlay loop controls ></audio>
 
-            <audio ref={audioHoverRef}>
+            <audio ref={audioHoverRef} onLoadedData={setAudio}>
                   <source src={mapHover} type="audio/ogg"/>
             </audio>
         </div>

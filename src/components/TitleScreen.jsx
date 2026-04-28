@@ -14,7 +14,7 @@ function TitleScreen() {
 
     useEffect(() => {
         const audio = bgRef.current;
-
+        audio.volume = 0.05;
         const savedTime = sessionStorage.getItem("audio-time")
 
         if (savedTime) audio.currentTime = parseFloat(savedTime) 
