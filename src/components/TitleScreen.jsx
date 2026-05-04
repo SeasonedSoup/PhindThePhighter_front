@@ -27,6 +27,7 @@ function TitleScreen() {
         return () => audio.removeEventListener("timeupdate", saveTime)
     }, [])
     const [hasInteracted, setHasInteracted] = useState(false); 
+    
 
     const [viewCredits, setViewCredits] = useState(false)
     function navigateToMapChoices() {
