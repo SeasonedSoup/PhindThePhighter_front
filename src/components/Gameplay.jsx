@@ -13,6 +13,7 @@ import { useToken } from "../customHooks/useToken";
 import { resetSession } from "../utils/sessionHandler";
 import giveRandomMusic from "../utils/AudioPlayerRandom";
 import ScoreForm from './ScoreForm';
+import DropDown from "./Dropdown";
 
 import pauseIcon from "@/assets/icons/pause-button.png";
 
@@ -190,6 +191,7 @@ export default function Gameplay() {
               <div className='map' ref={mapRef}>
                 <img draggable="false" src={currentMap} alt="selected map" />
                 <div className='square' style={{ left: pos.x * rect.width + 'px', top: pos.y * rect.height + 'px'}} ></div>
+                <DropDown phighters={phighters}/>
               </div>
               <h1 className="timer"> {formatTime(timer)} </h1>
               <h1 className="position">

@@ -1,6 +1,6 @@
 //contains the images of phighters and of which to click 
 
-export function DropDown() {
+export default function DropDown({phighters}) {
     return (
         <div className="dropdown">
             <div className="phighter">
