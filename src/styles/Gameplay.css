@@ -226,7 +226,7 @@ img.check {
   justify-content: space-evenly;
   background-color: rgb(164, 165, 170);
   position: fixed;
-  transform: translate(50%, 50%);
+  transform: translate(-50%, -120%);
   display: none;
   padding: 2rem;
   border-radius: 12px;
