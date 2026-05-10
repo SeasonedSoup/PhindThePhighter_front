@@ -250,6 +250,36 @@ img.check {
   background-color: rgb(187, 184, 184);
 }
 
+.spinner {
+  border-radius: 100%;
+  position: relative;
+  background-color: rgb(240, 240, 240);
+  width: 50px;
+  height: 50px;
+  border: solid 8px rgb(212, 212, 212);
+}
+
+.spin {
+  border-top: solid 4px rgb(0, 0, 0);
+  width: 50px;
+  height: 50px;
+  border-radius: 100%;
+  animation: spin 1000ms linear infinite;
+  position: absolute;
+
+  top: -8px;
+  left: -8px;
+}
+
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
 
 
 

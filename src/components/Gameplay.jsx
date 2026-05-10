@@ -19,8 +19,9 @@ import pauseIcon from "@/assets/icons/pause-button.png";
 
 export default function Gameplay() {
     //pauseState 
-    const [paused, setPaused] = useState(false)
+    const [paused, setPaused] = useState(false);
     const [track, setTrack] = useState("");
+    const [loadingIndex, setLoadingIndex] = useState(null);
     //navigation
     const navigate = useNavigate();
 
@@ -140,18 +141,27 @@ export default function Gameplay() {
 
     
     async function validateAnswer(character, index) {
-      const response = await fetch(getUrl(), {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        },
-        body: JSON.stringify({character: character, coordinates: pos})
-      })
-    const result = await response.json()
-      setToken(result.token)
-      sessionStorage.setItem("token", result.token);
-      changePhighterStatus(result, index)  
+      setLoadingIndex(index)
+      try {
+        const response = await fetch(getUrl(), {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify({character: character, coordinates: pos})
+        });
+        
+        const result = await response.json();
+        
+        setToken(result.token);
+        sessionStorage.setItem("token", result.token);
+        changePhighterStatus(result, index);
+      } catch (err) {
+            alert("Validation failed backend no work:", err);
+      } finally {
+        setLoadingIndex(null)
+      }
     }
 
     function navigateToMaps() {
@@ -213,11 +223,16 @@ export default function Gameplay() {
                         <img src={phighter.img} alt="coil" />
                         <h3 className="status"> {phighterStatus[i]}</h3>
                         <button className="findBtn" onClick={() => validateAnswer(phighter.name, i)}>Find</button>
-                        <div className='choices'>                    
-                          {phighterStatus[i] === 'Found' ? <img className="check"  key="found" src={found} alt="check Icon" /> : <img className="wrong"  key="notFound" src={notFound} alt="X Icon"/> }
-                        </div>
+                        <div className='choices'>
+                          {loadingIndex === i ? <div className="spinner"> 
+                            <div className="spin"></div>
+                          </div> :                      
+                          phighterStatus[i] === 'Found' ? <img className="check"  key="found" src={found} alt="check Icon" /> : <img className="wrong"  key="notFound" src={notFound} alt="X Icon"/> 
+                          }
+                          </div>
                     </div>
                     )})}
+                    
                 </div>
               </div>
             </div>
