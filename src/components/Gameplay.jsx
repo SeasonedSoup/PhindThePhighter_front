@@ -190,9 +190,11 @@ export default function Gameplay() {
         
               <div className='map' ref={mapRef}>
                 <img draggable="false" src={currentMap} alt="selected map" />
-                <div className='square' style={{ left: pos.x * rect.width + 'px', top: pos.y * rect.height + 'px'}} ></div>
-                <DropDown phighters={phighters}/>
+                <div className='square' style={{ left: pos.x * rect.width + 'px', top: pos.y * rect.height + 'px'}} >
+                </div>
+
               </div>
+              <DropDown phighters={phighters} phighterStatus={phighterStatus} validateAnswer={validateAnswer} pos={pos} rect={rect}/>
               <h1 className="timer"> {formatTime(timer)} </h1>
               <h1 className="position">
                   X: {rect ? (pos.x * 100).toFixed(1) : 0},

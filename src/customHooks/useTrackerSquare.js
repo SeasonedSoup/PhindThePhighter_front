@@ -10,9 +10,11 @@ export function useTrackerSquare(mapRef) {
              const stopWatching = watchClicks((coords) => {
                 setPos(coords)
                 const square = document.querySelector('.square');
+                const dropdown = document.querySelector('.phighterBox')
                 const size = mapRef.current.getBoundingClientRect();
                 setRect(size)
                 square.style.display = "block";
+                dropdown.style.display = "flex";
             }, mapRef.current)
             return () => {
                 stopWatching();
