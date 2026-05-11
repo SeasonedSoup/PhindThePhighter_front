@@ -13,9 +13,9 @@
 .btns {
   display: flex;
   flex-direction: column;
-  margin-left: 14%;
-  margin-right: 40%;
-  margin-top: 25%;
+  margin-left: clamp(1rem, 10vw, 14%);
+  margin-right: clamp(1rem, 30vw, 40%);
+  margin-top: clamp(2rem, 30vh, 25%);
   gap: 6em;
 }
 
@@ -93,8 +93,7 @@
   letter-spacing: 4px;
   text-align: center;
   color: white;
-  margin-bottom: 60%;
-  transform: scale(1.5);
+  margin-bottom: clamp(10%, 5vh, 60%);
 
   text-shadow: 
     -10px -2px 0 #000,  
@@ -247,3 +246,4 @@ a:hover {
 
   }
 }
+

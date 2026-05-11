@@ -49,7 +49,7 @@
 
 .gameplayAudio {
   position: absolute;
-  top: 93%;
+  top: clamp(50%, 88vh, 93%);
   left: 1%;
   display: flex;
   flex-direction: column;

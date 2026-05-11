@@ -54,6 +54,7 @@ function PreviewMap() {
                 </div>
                 <img src={getMap(mapId)}/>
                 <button className='playBtn' onClick={startGame}>Play Map</button>
+                <h1>I suggest zooming out around 50 - 67% if current screen is very bad as the gameplay will be bad apologies</h1>
             </div>
 
             <div className='topTenLb'>
