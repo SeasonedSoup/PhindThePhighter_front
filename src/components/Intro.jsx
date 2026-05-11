@@ -20,6 +20,7 @@ export function Intro() {
         <div className="intro-container">
             <h1>Made by @Seasoned-Soup</h1>
             <h1>Audio Warning!</h1>
+            <h1>I suggest zooming out to 50-67% if screen went bad also not mobile compatible apologies</h1>
             <button onClick={handleStart}>Click this button to start!</button>
         </div>
     )
